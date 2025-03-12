@@ -1,4 +1,4 @@
-package com.example.Lebron_James._Cars;
+package com.lebronJamesCars;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
