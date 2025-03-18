@@ -1,14 +1,15 @@
 package com.lebronJamesCars.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
-    private Long UserId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+    
     private String name;
     private String email;
     private String password;
@@ -26,10 +27,9 @@ public class User {
         this.cart = "{}";
     }
 
-    public User(Long UserId, String name, String email, String password, String cart,
+    public User(String name, String email, String password, String cart,
                 String address, String postalCode, String city, String province,
                 String phoneNum, String role) {
-        this.UserId = UserId;
         this.name = name;
         this.email = email;
         this.password = password;
@@ -56,11 +56,11 @@ public class User {
 
 
     public Long getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(Long id) {
-        this.UserId = id;
+        this.userId = id;
     }
 
     public String getName() {
