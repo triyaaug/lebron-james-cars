@@ -1,5 +1,6 @@
 package com.lebronJamesCars.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -14,7 +15,9 @@ public class User {
     private String email;
     private String password;
     // Convert into json later
-    private String cart;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Cart cart;
     private String address;
     private String postalCode;
     private String city;
@@ -22,12 +25,12 @@ public class User {
     private String phoneNum;
     private String role;
 
-    public User(){
-        // Initialize with empty JSON object
-        this.cart = "{}";
+    public User() {
+        this.cart = new Cart();
+        this.cart.setUser(this);
     }
 
-    public User(String name, String email, String password, String cart,
+    public User(String name, String email, String password, Cart cart,
                 String address, String postalCode, String city, String province,
                 String phoneNum, String role) {
         this.name = name;
@@ -87,11 +90,11 @@ public class User {
         this.password = password;
     }
 
-    public String getCart() {
+    public Cart getCart() {
         return cart;
     }
 
-    public void setCart(String cart) {
+    public void setCart(Cart cart) {
         this.cart = cart;
     }
 

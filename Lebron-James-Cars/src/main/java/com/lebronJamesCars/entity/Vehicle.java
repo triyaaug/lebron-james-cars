@@ -1,13 +1,12 @@
 package com.lebronJamesCars.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name = "vehicle")
 public class Vehicle {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long vehicleID;
     private String brand;
     private String shape;
