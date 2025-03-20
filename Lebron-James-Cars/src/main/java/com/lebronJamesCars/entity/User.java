@@ -11,18 +11,35 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
     
+    @Column(name = "name", nullable = false)
     private String name;
+    
+    @Column(name = "email", nullable = false)
     private String email;
+    
+    @Column(name = "password", nullable = false)
     private String password;
-    // Convert into json later
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+   
+    @OneToOne(mappedBy = "user")
     @JsonIgnore
     private Cart cart;
+    
+    @Column(name = "address", nullable = false)
     private String address;
+    
+    @Column(name = "postalCode", nullable = false)
     private String postalCode;
+    
+    @Column(name = "city", nullable = false)
     private String city;
+    
+    @Column(name = "province", nullable = false)
     private String province;
+    
+    @Column(name = "phoneNum", nullable = false)
     private String phoneNum;
+    
+    @Column(name = "role", nullable = false)
     private String role;
 
     public User() {
