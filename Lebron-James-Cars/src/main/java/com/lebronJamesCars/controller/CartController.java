@@ -1,5 +1,6 @@
 package com.lebronJamesCars.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,6 +62,16 @@ public class CartController {
         return cartService.updateCart(userId, updatedCart)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+    
+    @PostMapping("/checkout")
+    public ResponseEntity<String> checkout(@PathVariable Long userId) {
+        try {
+            cartService.checkout(userId);
+            return ResponseEntity.ok("Order Successfully Completed.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
     
 }

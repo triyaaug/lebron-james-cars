@@ -97,7 +97,27 @@ public class CartService {
 		return cartRepository.save(cart);
 	}
 
-	
+	public void checkout(Long userId) {
+	    Cart cart = getCartByUserId(userId);
+	    if (cart.getVehicles().isEmpty()) throw new RuntimeException("Cart is empty");
+	    boolean paymentApproved = PaymentService.processPayment(cart.getPrice());
+	    if (paymentApproved) {
+	    	 for (Vehicle vehicle : cart.getVehicles()) {
+	             if (vehicle.getStock() > 0) {
+	                 vehicle.setStock(vehicle.getStock() - 1);
+	                 vehicleRepository.save(vehicle);
+	             } else {
+	                 throw new RuntimeException("Vehicle " + vehicle.getVehicleID() + " is out of stock");
+	             }
+	         }
+	    	// Clear the cart after successful payment
+	        cart.getVehicles().clear();
+	        updateCartTotals(cart);
+	        cartRepository.save(cart);
+	    } else {
+	        throw new RuntimeException("Credit Card Authorization Failed");
+	    }
+	}
 	
 	
 }
