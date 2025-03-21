@@ -1,6 +1,6 @@
 package com.lebronJamesCars.controller;
 
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.lebronJamesCars.entity.Cart;
@@ -9,31 +9,58 @@ import com.lebronJamesCars.service.CartService;
 @RestController
 @RequestMapping("/users/{userId}/cart")
 public class CartController {
-	
-	private final CartService cartService;
+    
+    private final CartService cartService;
 
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
     
- // Get user's cart
+    // Get user's cart
     @GetMapping
-    public Cart getCart(@PathVariable Long userId) {
-        return cartService.getCartByUserId(userId);
+    public ResponseEntity<Cart> getCart(@PathVariable Long userId) {
+        try {
+            Cart cart = cartService.getCartByUserId(userId);
+            return ResponseEntity.ok(cart);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
     
+    // Add vehicle to cart
     @PostMapping("/{vehicleId}")
-    public Cart addToCart(
+    public ResponseEntity<Cart> addToCart(
             @PathVariable Long userId,
             @PathVariable Long vehicleId) {
-        return cartService.addVehicleToCart(userId, vehicleId);
+        try {
+            Cart cart = cartService.addVehicleToCart(userId, vehicleId);
+            return ResponseEntity.ok(cart);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
     
+    // Remove vehicle from cart
     @DeleteMapping("/{vehicleId}")
-    public Cart removeVehicle( 
-    		@PathVariable Long userId,
+    public ResponseEntity<Cart> removeVehicle(
+            @PathVariable Long userId,
             @PathVariable Long vehicleId) {
-    	return cartService.removeFromCart(userId, vehicleId);
+        try {
+            Cart cart = cartService.removeFromCart(userId, vehicleId);
+            return ResponseEntity.ok(cart);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    // Update cart
+    @PutMapping
+    public ResponseEntity<Cart> updateCart(
+            @PathVariable Long userId,
+            @RequestBody Cart updatedCart) {
+        return cartService.updateCart(userId, updatedCart)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
     
 }
