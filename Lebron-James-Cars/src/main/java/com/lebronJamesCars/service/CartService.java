@@ -84,6 +84,18 @@ public class CartService {
 	    }
 	    return cartRepository.save(cart);
 	}
+	
+	public Cart removeFromCart(Long userId, Long vehicleId) {
+		Cart cart = getCartByUserId(userId);
+		 Vehicle vehicle = vehicleRepository.findById(vehicleId)
+		            .orElseThrow(() -> new RuntimeException("Vehicle not found"));
+				
+		if(cart.getVehicles().contains(vehicle)) {
+			cart.getVehicles().remove(vehicle);
+			updateCartTotals(cart);
+		}
+		return cartRepository.save(cart);
+	}
 
 
 	

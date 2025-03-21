@@ -28,6 +28,12 @@ public class CartController {
             @PathVariable Long vehicleId) {
         return cartService.addVehicleToCart(userId, vehicleId);
     }
-   
+    
+    @DeleteMapping("/{vehicleId}")
+    public Cart removeVehicle( 
+    		@PathVariable Long userId,
+            @PathVariable Long vehicleId) {
+    	return cartService.removeFromCart(userId, vehicleId);
+    }
     
 }
