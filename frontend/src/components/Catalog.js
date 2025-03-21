@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Catalog = () => {
+const Catalog = ({ user }) => {
   const [vehicles, setVehicles] = useState([]);
-  const [sortBy, setSortBy] = useState("price"); // Default sorting by price
-  const [sortOrder, setSortOrder] = useState("asc"); // Default sorting order
+  const [sortBy, setSortBy] = useState("price");
+  const [sortOrder, setSortOrder] = useState("asc");
+  const [addingToCart, setAddingToCart] = useState({});
 
   const navigate = useNavigate();
 
@@ -13,10 +14,40 @@ const Catalog = () => {
       .then((response) => response.json())
       .then((data) => setVehicles(data))
       .catch((error) => console.error("Error fetching vehicles:", error));
-  }, [sortBy, sortOrder]); // Refetch when sorting changes
+  }, [sortBy, sortOrder]);
 
   const handleClick = (id) => {
     navigate(`/vehicle/${id}`);
+  };
+
+  const handleAddToCart = (vehicleID) => {
+    console.log("User before adding to cart:", user); // Debugging
+
+    if (!user || !user.userId) {
+      alert("Please log in to add items to the cart.");
+      return;
+    }
+
+    setAddingToCart((prev) => ({ ...prev, [vehicleID]: true }));
+
+    fetch(`http://localhost:8080/users/${user.userId}/cart/${vehicleID}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to add to cart");
+        return response.json();
+      })
+      .then(() => {
+        alert("Vehicle added to cart!");
+      })
+      .catch((error) => {
+        console.error("Error adding to cart:", error);
+        alert("Could not add to cart.");
+      })
+      .finally(() => {
+        setAddingToCart((prev) => ({ ...prev, [vehicleID]: false }));
+      });
   };
 
   // Separate Hot Deals from other vehicles
@@ -26,6 +57,9 @@ const Catalog = () => {
   return (
     <div>
       <h2>Car Catalog</h2>
+
+      {/* Debugging user object */}
+      {console.log("User in Catalog:", user)}
 
       {/* Sort Options */}
       <div>
@@ -49,19 +83,25 @@ const Catalog = () => {
             {hotDeals.map((vehicle) => (
               <div
                 key={vehicle.vehicleID}
-                onClick={() => handleClick(vehicle.vehicleID)}
                 style={{
                   border: "2px solid red",
                   padding: "10px",
-                  cursor: "pointer",
-                  width: "200px",
+                  width: "220px",
                   backgroundColor: "#ffe6e6",
                 }}
               >
-                <h3>{vehicle.brand}</h3>
+                <h3 onClick={() => handleClick(vehicle.vehicleID)} style={{ cursor: "pointer" }}>
+                  {vehicle.brand}
+                </h3>
                 <p>{vehicle.modelYear}</p>
                 <p><b>Discounted Price:</b> ${vehicle.price}</p>
                 <p>Mileage: {vehicle.mileage} km</p>
+                <button
+                  onClick={() => handleAddToCart(vehicle.vehicleID)}
+                  disabled={addingToCart[vehicle.vehicleID]}
+                >
+                  {addingToCart[vehicle.vehicleID] ? "Adding..." : "Add to Cart"}
+                </button>
               </div>
             ))}
           </div>
@@ -74,18 +114,24 @@ const Catalog = () => {
         {regularVehicles.map((vehicle) => (
           <div
             key={vehicle.vehicleID}
-            onClick={() => handleClick(vehicle.vehicleID)}
             style={{
               border: "1px solid #ccc",
               padding: "10px",
-              cursor: "pointer",
-              width: "200px",
+              width: "220px",
             }}
           >
-            <h3>{vehicle.brand}</h3>
+            <h3 onClick={() => handleClick(vehicle.vehicleID)} style={{ cursor: "pointer" }}>
+              {vehicle.brand}
+            </h3>
             <p>{vehicle.modelYear}</p>
             <p>${vehicle.price}</p>
             <p>Mileage: {vehicle.mileage} km</p>
+            <button
+              onClick={() => handleAddToCart(vehicle.vehicleID)}
+              disabled={addingToCart[vehicle.vehicleID]}
+            >
+              {addingToCart[vehicle.vehicleID] ? "Adding..." : "Add to Cart"}
+            </button>
           </div>
         ))}
       </div>

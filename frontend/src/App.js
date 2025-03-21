@@ -6,6 +6,7 @@ import LandingPage from "./components/LandingPage";
 import Catalog from "./components/Catalog";
 import VehicleDetails from "./components/VehicleDetails";
 import Navbar from "./components/Navbar";
+import Cart from "./components/Cart";
 
 function App() {
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")) || null);
@@ -33,8 +34,9 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-        <Route path="/catalog" element={<Catalog />} />
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
+        <Route path="/catalog" element={<Catalog user={user} />} />
+        <Route path="/cart" element={<Cart user={user} />} />
       </Routes>
     </div>
   );
