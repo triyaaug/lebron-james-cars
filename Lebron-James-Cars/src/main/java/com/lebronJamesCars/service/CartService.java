@@ -74,21 +74,11 @@ public class CartService {
 	}
 	
 	public Cart addVehicleToCart(Long userId, Long vehicleId) {
-	    Cart cart = getCartByUserId(userId);
+		Cart cart = getCartByUserId(userId);
 	    Vehicle vehicle = vehicleRepository.findById(vehicleId)
 	            .orElseThrow(() -> new RuntimeException("Vehicle not found"));
 	    
-	    if (!cart.getVehicles().contains(vehicle)) {
-	        // Check stock availability
-	        if (vehicle.getStock() <= 0) {
-	            throw new RuntimeException("Vehicle out of stock: " + vehicle.getVehicleID());
-	        }
-
-	        // Decrement stock and save the vehicle
-	        vehicle.setStock(vehicle.getStock() - 1);
-	        vehicleRepository.save(vehicle);
-
-	        // Add to cart and update totals
+	    if(!cart.getVehicles().contains(vehicle)) {
 	        cart.getVehicles().add(vehicle);
 	        updateCartTotals(cart);
 	    }
