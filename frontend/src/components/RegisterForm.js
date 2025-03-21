@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,8 @@ const RegisterForm = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -67,7 +70,10 @@ const RegisterForm = () => {
         <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} />
         <input type="text" name="province" placeholder="Province" value={formData.province} onChange={handleChange} />
         <input type="text" name="phoneNum" placeholder="Phone Number" value={formData.phoneNum} onChange={handleChange} />
-        <button type="submit">Register</button>
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <button type="submit">Register</button>
+          <Link to="/"><a>Already have an account?</a></Link>
+        </div>
       </form>
     </div>
   );

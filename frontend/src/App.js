@@ -31,9 +31,11 @@ function App() {
     <div>
       {showNavbar && <Navbar user={user} onLogout={handleLogout} />}
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        {/* <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} /> */}
+        <Route path="/" element={<LoginForm onLogin={handleLogin} />}/>
+        <Route path="/login"  element={<LandingPage />}/>
         <Route path="/register" element={<RegisterForm />} />
-        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
         <Route path="/catalog" element={<Catalog user={user} />} />
         <Route path="/cart" element={<Cart user={user} />} />
