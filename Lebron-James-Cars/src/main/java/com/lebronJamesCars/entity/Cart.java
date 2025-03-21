@@ -3,6 +3,7 @@ package com.lebronJamesCars.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -25,9 +26,14 @@ public class Cart {
             inverseJoinColumns = @JoinColumn(name = "vehicle_id")
     )
     private List<Vehicle> vehicles;
-    private double price;
+    @Column(name = "price", nullable = false)
+    private BigDecimal price;
     private int noItems;
-
+    
+    public Cart() {
+        this.price = BigDecimal.ZERO;
+        this.noItems = 0;
+    }
 
 
     public Long getCartId() {
@@ -46,12 +52,12 @@ public class Cart {
         this.vehicles = vehicles;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPrice(BigDecimal total) {
+        this.price = total;
     }
 
     public int getNoItems() {

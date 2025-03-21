@@ -1,15 +1,5 @@
 package com.lebronJamesCars.entity;
 
-<<<<<<< HEAD
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "vehicle")
-public class Vehicle {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long vehicleID;
-=======
 import java.math.BigDecimal;
 
 import jakarta.persistence.*;
@@ -23,7 +13,6 @@ public class Vehicle {
     private Long vehicleID;
     
     @Column(name = "brand", nullable = false)
->>>>>>> origin/vehicles
     private String brand;
     @Column(name = "shape")
     private String shape;

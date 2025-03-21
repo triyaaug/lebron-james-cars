@@ -20,7 +20,7 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
    
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true )
     @JsonIgnore
     private Cart cart;
     
