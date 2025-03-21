@@ -70,7 +70,20 @@ public class Vehicle {
     	
     }
 
-    public void calculateLoan(){}
+    public double calculateLoan(double vehiclePrice, double downPayment, double interestRate, int loadDuration ){
+    	double loanPrincipal = vehiclePrice - downPayment;
+    	
+    	double monthlyInterestRate = interestRate / 100 / 12;
+    	
+    	int numberOfPayments = loanDuration * 12;
+    	
+    	if (monthlyInterestRate == 0) {
+    		return loanPrincipal / numberOfPayments;
+    	}else {
+    		double monthlyPayment = (loanPrincipal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments))/ (Math.pow(1 + monthlyInterestRate, numberOfPayments)-1);
+    		return monthlyPayment;
+    	}
+    }
 
 
     public double getMileage() {
