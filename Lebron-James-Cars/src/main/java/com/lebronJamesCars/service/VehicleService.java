@@ -3,6 +3,7 @@ package com.lebronJamesCars.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.lebronJamesCars.entity.Vehicle;
@@ -21,6 +22,38 @@ public class VehicleService {
 	public List<Vehicle> getAllVehicles(){
 		return vehicleRepository.findAll();
 	}
+	
+    // Get all vehicles with sorting
+    public List<Vehicle> getAllVehicles(String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        return vehicleRepository.findAll(sort);
+    }
+    
+//    //filters
+//    //brand
+//    public List<Vehicle> getVehiclesByBrand(String brand) {
+//        return vehicleRepository.findByBrand(brand);
+//    }
+//    //shape
+//    public List<Vehicle> getVehiclesByShape(String shape) {
+//        return vehicleRepository.findByShape(shape);
+//    }
+//    //model year
+//    public List<Vehicle> getVehiclesByModelYear(int modelYear) {
+//        return vehicleRepository.findByModelYear(modelYear);
+//    }
+//    //vehicle history
+//    public List<Vehicle> getVehiclesByVehicleHistory(String vehicleHistory){
+//    	return vehicleRepository.findByVehicleHistory(vehicleHistory);
+//    }
+//    //hot deals
+//    public List<Vehicle> getVehiclesByHotDeals(boolean onSale){
+//    	return vehicleRepository.findByHotDeals(onSale);
+//    }
+    
+    
+    
+    
 	
 	public Optional<Vehicle> getVehicleById(Long id){
 		return vehicleRepository.findById(id);
@@ -45,6 +78,7 @@ public class VehicleService {
 			vehicle.setCo2Emission(newVehicle.getCo2Emission());
 			vehicle.setFuelUsage(newVehicle.getFuelUsage());
 			vehicle.setOnSale(newVehicle.isOnSale());
+			vehicle.setMileage(newVehicle.getMileage());
 			return vehicleRepository.save(vehicle);
 		});
 	}

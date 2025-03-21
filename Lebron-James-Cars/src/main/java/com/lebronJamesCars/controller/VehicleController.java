@@ -20,10 +20,40 @@ public class VehicleController {
 	}
 	
 	@GetMapping
-	public List<Vehicle> getAllUsers(){
-		return vehicleService.getAllVehicles();
-	}
+    public List<Vehicle> getAllVehicles(
+            @RequestParam(required = false, defaultValue = "price") String sortBy,
+            @RequestParam(required = false, defaultValue = "asc") String direction) {
+        return vehicleService.getAllVehicles(sortBy, direction);
+    }
 	
+	//filters
+	//brand
+//    @GetMapping("/brand/{brand}")
+//    public List<Vehicle> getVehiclesByBrand(@PathVariable String brand) {
+//        return vehicleService.getVehiclesByBrand(brand);
+//    }
+//	//shape
+//    @GetMapping("/shape/{shape}")
+//    public List<Vehicle> getVehiclesByShape(@PathVariable String shape) {
+//        return vehicleService.getVehiclesByShape(shape);
+//    }
+//    //model year
+//    @GetMapping("/modelYear/{modelYear}")
+//    public List<Vehicle> getVehiclesByModelYear(@PathVariable int modelYear) {
+//        return vehicleService.getVehiclesByModelYear(modelYear);
+//    }
+//    //vehicle history
+//    @GetMapping("/vehicleHistory/{vehicleHistory}")
+//    public List<Vehicle> getVehiclesByVehicleHistory(@PathVariable String vehicleHistory) {
+//        return vehicleService.getVehiclesByVehicleHistory(vehicleHistory);
+//    }
+//    //hot deals
+//    @GetMapping("/onSale/{onSale}")
+//    public List<Vehicle> getVehiclesByHotDeals(@PathVariable boolean onSale) {
+//        return vehicleService.getVehiclesByHotDeals(onSale);
+//    }
+    
+    
 	@GetMapping("/{id}")
 	public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id){
 		Optional<Vehicle> vehicle = vehicleService.getVehicleById(id);
