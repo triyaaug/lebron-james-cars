@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import LandingPage from "./components/LandingPage";
-import Catalog from './components/Catalog';
+import Catalog from "./components/Catalog";
+import VehicleDetails from "./components/VehicleDetails";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")) || null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogin = (loggedInUser) => {
     setUser(loggedInUser);
@@ -21,22 +24,17 @@ function App() {
     navigate("/");
   };
 
+  const showNavbar = location.pathname !== "/"; // Hide navbar on landing page
+
   return (
     <div>
-      <nav>
-        {user ? (
-          <>
-            <span>Welcome, {user.name}!</span>
-            <button onClick={handleLogout}>Logout</button>
-          </>
-        ) : null}
-      </nav>
-
+      {showNavbar && <Navbar user={user} onLogout={handleLogout} />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/catalog" element={<Catalog />} />
+        <Route path="/vehicle/:id" element={<VehicleDetails />} />
       </Routes>
     </div>
   );
