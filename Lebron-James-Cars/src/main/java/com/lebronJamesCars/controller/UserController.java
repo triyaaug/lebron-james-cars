@@ -30,11 +30,18 @@ public class UserController {
         return user.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User savedUser = userService.createUser(user);
         return ResponseEntity.ok(savedUser);
     }
+    
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestBody User user) {
+        Optional<User> loggedInUser = userService.loginUser(user.getEmail(), user.getPassword());
+        return loggedInUser.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.status(401).build());
+    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {

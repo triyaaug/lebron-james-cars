@@ -28,6 +28,12 @@ public class UserService {
         // Add additional business logic (e.g., hashing password, validation)
         return userRepository.save(user);
     }
+    
+    public Optional<User> loginUser(String email, String password) {
+        return userRepository.findByEmail(email)
+            .filter(user -> user.getPassword().equals(password)); // NO HASHING - only for simplicity
+    }
+
 
     public Optional<User> updateUser(Long id, User newUser) {
         return userRepository.findById(id).map(user -> {
