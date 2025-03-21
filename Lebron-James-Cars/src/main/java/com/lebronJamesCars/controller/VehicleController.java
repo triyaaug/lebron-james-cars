@@ -28,30 +28,30 @@ public class VehicleController {
 	
 	//filters
 	//brand
-//    @GetMapping("/brand/{brand}")
-//    public List<Vehicle> getVehiclesByBrand(@PathVariable String brand) {
-//        return vehicleService.getVehiclesByBrand(brand);
-//    }
-//	//shape
-//    @GetMapping("/shape/{shape}")
-//    public List<Vehicle> getVehiclesByShape(@PathVariable String shape) {
-//        return vehicleService.getVehiclesByShape(shape);
-//    }
-//    //model year
-//    @GetMapping("/modelYear/{modelYear}")
-//    public List<Vehicle> getVehiclesByModelYear(@PathVariable int modelYear) {
-//        return vehicleService.getVehiclesByModelYear(modelYear);
-//    }
-//    //vehicle history
-//    @GetMapping("/vehicleHistory/{vehicleHistory}")
-//    public List<Vehicle> getVehiclesByVehicleHistory(@PathVariable String vehicleHistory) {
-//        return vehicleService.getVehiclesByVehicleHistory(vehicleHistory);
-//    }
-//    //hot deals
-//    @GetMapping("/onSale/{onSale}")
-//    public List<Vehicle> getVehiclesByHotDeals(@PathVariable boolean onSale) {
-//        return vehicleService.getVehiclesByHotDeals(onSale);
-//    }
+    @GetMapping("/brand/{brand}")
+    public List<Vehicle> getVehiclesByBrand(@PathVariable String brand) {
+        return vehicleService.getVehiclesByBrand(brand);
+    }
+	//shape
+    @GetMapping("/shape/{shape}")
+    public List<Vehicle> getVehiclesByShape(@PathVariable String shape) {
+        return vehicleService.getVehiclesByShape(shape);
+    }
+    //model year
+    @GetMapping("/modelYear/{modelYear}")
+    public List<Vehicle> getVehiclesByModelYear(@PathVariable int modelYear) {
+        return vehicleService.getVehiclesByModelYear(modelYear);
+    }
+    //vehicle history
+    @GetMapping("/vehicleHistory/{vehicleHistory}")
+    public List<Vehicle> getVehiclesByVehicleHistory(@PathVariable String vehicleHistory) {
+        return vehicleService.getVehiclesByVehicleHistory(vehicleHistory);
+    }
+    //hot deals
+    @GetMapping("/onSale/{onSale}")
+    public List<Vehicle> getVehiclesByOnSale(@PathVariable boolean onSale) {
+        return vehicleService.getVehiclesByOnSale(onSale);
+    }
     
     
 	@GetMapping("/{id}")

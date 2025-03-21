@@ -29,27 +29,27 @@ public class VehicleService {
         return vehicleRepository.findAll(sort);
     }
     
-//    //filters
-//    //brand
-//    public List<Vehicle> getVehiclesByBrand(String brand) {
-//        return vehicleRepository.findByBrand(brand);
-//    }
-//    //shape
-//    public List<Vehicle> getVehiclesByShape(String shape) {
-//        return vehicleRepository.findByShape(shape);
-//    }
-//    //model year
-//    public List<Vehicle> getVehiclesByModelYear(int modelYear) {
-//        return vehicleRepository.findByModelYear(modelYear);
-//    }
-//    //vehicle history
-//    public List<Vehicle> getVehiclesByVehicleHistory(String vehicleHistory){
-//    	return vehicleRepository.findByVehicleHistory(vehicleHistory);
-//    }
-//    //hot deals
-//    public List<Vehicle> getVehiclesByHotDeals(boolean onSale){
-//    	return vehicleRepository.findByHotDeals(onSale);
-//    }
+    //filters
+    //brand
+    public List<Vehicle> getVehiclesByBrand(String brand) {
+        return vehicleRepository.findByBrand(brand);
+    }
+    //shape
+    public List<Vehicle> getVehiclesByShape(String shape) {
+        return vehicleRepository.findByShape(shape);
+    }
+    //model year
+    public List<Vehicle> getVehiclesByModelYear(int modelYear) {
+        return vehicleRepository.findByModelYear(modelYear);
+    }
+    //vehicle history
+    public List<Vehicle> getVehiclesByVehicleHistory(String vehicleHistory){
+    	return vehicleRepository.findByVehicleHistory(vehicleHistory);
+    }
+    //hot deals
+    public List<Vehicle> getVehiclesByOnSale(boolean onSale){
+    	return vehicleRepository.findByOnSale(onSale);
+    }
     
     
     
