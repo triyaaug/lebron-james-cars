@@ -9,7 +9,7 @@ const Catalog = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:8080/vehicles?sortBy=${sortBy}&direction=${sortOrder}`) // Fetch sorted data
+    fetch(`http://localhost:8080/vehicles?sortBy=${sortBy}&direction=${sortOrder}`)
       .then((response) => response.json())
       .then((data) => setVehicles(data))
       .catch((error) => console.error("Error fetching vehicles:", error));
@@ -18,6 +18,10 @@ const Catalog = () => {
   const handleClick = (id) => {
     navigate(`/vehicle/${id}`);
   };
+
+  // Separate Hot Deals from other vehicles
+  const hotDeals = vehicles.filter((vehicle) => vehicle.onSale);
+  const regularVehicles = vehicles.filter((vehicle) => !vehicle.onSale);
 
   return (
     <div>
@@ -37,9 +41,37 @@ const Catalog = () => {
         </button>
       </div>
 
-      {/* Vehicle Cards */}
+      {/* Hot Deals Section */}
+      {hotDeals.length > 0 && (
+        <div>
+          <h2 style={{ color: "red" }}>🔥 Hot Deals 🔥</h2>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+            {hotDeals.map((vehicle) => (
+              <div
+                key={vehicle.vehicleID}
+                onClick={() => handleClick(vehicle.vehicleID)}
+                style={{
+                  border: "2px solid red",
+                  padding: "10px",
+                  cursor: "pointer",
+                  width: "200px",
+                  backgroundColor: "#ffe6e6",
+                }}
+              >
+                <h3>{vehicle.brand}</h3>
+                <p>{vehicle.modelYear}</p>
+                <p><b>Discounted Price:</b> ${vehicle.price}</p>
+                <p>Mileage: {vehicle.mileage} km</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Regular Vehicle List */}
+      <h2>All Vehicles</h2>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginTop: "10px" }}>
-        {vehicles.map((vehicle) => (
+        {regularVehicles.map((vehicle) => (
           <div
             key={vehicle.vehicleID}
             onClick={() => handleClick(vehicle.vehicleID)}
