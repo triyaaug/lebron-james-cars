@@ -41,6 +41,9 @@ public class Vehicle {
     
     @Column(name = "onSale")
     private boolean onSale;
+    
+    @Column(name = "mileage")
+    private double mileage;
 
     public Vehicle(){
 
@@ -48,7 +51,7 @@ public class Vehicle {
     
     public Vehicle(String brand, String shape, String vehicleHistory, String reviews, 
     		int modelYear, int stock, int loanDuration, double emissionScore, BigDecimal interestRate, BigDecimal price, 
-    		 double co2Emission, double fuelUsage, boolean onSale) {
+    		 double co2Emission, double fuelUsage, boolean onSale, double mileage) {
     	
     	this.brand = brand;
     	this.shape = shape;
@@ -63,14 +66,20 @@ public class Vehicle {
     	this.co2Emission = co2Emission;
     	this.fuelUsage = fuelUsage;
     	this.onSale = onSale;
+    	this.mileage = mileage;
     	
     }
 
     public void calculateLoan(){}
 
 
+    public double getMileage() {
+    	return mileage;
+    }
 
-
+    public void setMileage(double mileage) {
+    	this.mileage = mileage;
+    }
 
     public boolean isOnSale() {
         return onSale;
