@@ -1,6 +1,7 @@
 package com.lebronJamesCars.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import jakarta.persistence.*;
 
@@ -46,6 +47,7 @@ public class Vehicle {
     private double mileage;
 
     public Vehicle(){
+    	
 
     }
     
@@ -70,7 +72,16 @@ public class Vehicle {
     	
     }
 
-    public void calculateLoan(){}
+    public BigDecimal calculateLoan(){
+
+    	if (price == null || interestRate == null || loanDuration == 0) {
+            return BigDecimal.ZERO;
+        }
+    	// Get the monthly interest rate (annual rate / 12)
+    	BigDecimal monthlyRate = interestRate.divide(BigDecimal.valueOf(12), 4, RoundingMode.HALF_UP);
+    	BigDecimal monthlyPayment = price.multiply(monthlyRate).multiply(BigDecimal.valueOf(loanDuration));
+    	return monthlyPayment;
+    }
 
 
     public double getMileage() {
