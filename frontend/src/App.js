@@ -25,14 +25,12 @@ function App() {
     navigate("/");
   };
 
-  const showNavbar = location.pathname !== "/"; // Hide navbar on landing page
+  const showNavbar = location.pathname !== "/" && location.pathname !== "/register"; // Hide navbar on landing page
 
   return (
     <div>
       {showNavbar && <Navbar user={user} onLogout={handleLogout} />}
       <Routes>
-        {/* <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} /> */}
         <Route path="/" element={<LoginForm onLogin={handleLogin} />}/>
         <Route path="/login"  element={<LandingPage />}/>
         <Route path="/register" element={<RegisterForm />} />
