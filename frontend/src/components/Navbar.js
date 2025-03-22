@@ -14,7 +14,8 @@ function Navbar({ user, onLogout }) {
       {/* Left side links */}
       <div>
         <Link to="/catalog" style={{ color: "white", textDecoration: "none", marginRight: "15px" }}>Catalog</Link>
-        <Link to="/cart" style={{ color: "white", textDecoration: "none",marginLeft: "10px" }}>Cart</Link>
+        <Link to="/cart" style={{ color: "white", textDecoration: "none",marginLeft: "10px",marginRight: "15px"}}>Cart</Link>
+        <Link to="/loan-calculator" style={{ color: "white", textDecoration: "none",marginLeft: "10px" }}>Loan Calculator</Link>
       </div>
 
       {/* Right side logout button (only shown when logged in) */}
