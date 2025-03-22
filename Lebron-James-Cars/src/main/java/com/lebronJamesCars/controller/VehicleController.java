@@ -1,5 +1,6 @@
 package com.lebronJamesCars.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +59,12 @@ public class VehicleController {
 	public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id){
 		Optional<Vehicle> vehicle = vehicleService.getVehicleById(id);
 		return vehicle.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+	}
+	
+	@GetMapping("/{id}/loan")
+	public ResponseEntity<BigDecimal> getVehicleLoan(@PathVariable Long id) {
+	    BigDecimal loanAmount = vehicleService.getLoanAmount(id);
+	    return ResponseEntity.ok(loanAmount);
 	}
 	
 	@PostMapping

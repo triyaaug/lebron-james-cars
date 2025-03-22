@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { getAllUsers } from "../services/userService";
 
 const LoginForm = ({ onLogin }) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [users, setUsers] = useState([]);
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const navigate = useNavigate(); // Hook for navigation
@@ -34,19 +38,32 @@ const LoginForm = ({ onLogin }) => {
       console.error("Error:", error);
       setMessage("Failed to connect to the server.");
     }
+
+    if (user) {
+      navigate("/catalog"); // Redirect logged-in users to the catalog
+    } else {
+      getAllUsers().then(setUsers); // Fetch registered users only if not logged in
+    }
   };
   
   return (
-    <div style={{ maxWidth: "400px", margin: "auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px" }}>
+    <div style={{ maxWidth: "400px", margin: "auto", padding: "20px", borderRadius: "5px" }}>
       <h2>Login</h2>
       {message && <p>{message}</p>}
-      <form onSubmit={handleSubmit}>
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
-        <button type="submit">Login</button>
+      <form style={{ display: "flex", flexDirection: "column", gap: "10px", padding: "20px", border: "1px solid #ccc", borderRadius: "8px", maxWidth: "400px", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)", backgroundColor: "#fff"}} onSubmit={handleSubmit}>
+        <div>
+          <input style={{width: "90%", margin: "5px", padding: "10px", borderRadius: "5px", border: "1px solid #ccc", fontSize: "16px"}} type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+          <input style={{width: "90%", margin: "5px", padding: "10px", borderRadius: "5px", border: "1px solid #ccc", fontSize: "16px"}} type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", gap: "10px" }}>
+          <button style={{width: "120px", padding: "10px", borderRadius: "5px", backgroundColor: "#007bff", color: "white", fontSize: "16px", cursor: "pointer", border: "none", transition: "0.3s"}} type="submit">Login</button>
+          <Link to="/register"><button style={{width: "120px", padding: "10px", borderRadius: "5px", backgroundColor: "#28a745", color: "white", fontSize: "16px", cursor: "pointer", border: "none", transition: "0.3s"}} type="button">Register</button></Link>
+        </div>      
       </form>
     </div>
   );
+
+
 };
 
 export default LoginForm;

@@ -1,6 +1,7 @@
 package com.lebronJamesCars.entity;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import jakarta.persistence.*;
 
@@ -46,6 +47,7 @@ public class Vehicle {
     private double mileage;
 
     public Vehicle(){
+    	
 
     }
     
