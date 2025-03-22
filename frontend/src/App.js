@@ -8,6 +8,7 @@ import VehicleDetails from "./components/VehicleDetails";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import LoanCalculator from "./components/LoanCalculator";
+import Payment from "./components/Payment";
 
 function App() {
   const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")) || null);
@@ -39,6 +40,7 @@ function App() {
         <Route path="/catalog" element={<Catalog user={user} />} />
         <Route path="/cart" element={<Cart user={user} />} />
         <Route path="/loan-calculator" element={<LoanCalculator />} />
+        <Route path="/payment" element={<Payment />} />
       </Routes>
     </div>
   );

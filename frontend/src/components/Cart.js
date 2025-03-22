@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Cart = ({ user }) => {
   const [cart, setCart] = useState(null);
   const userId = user?.userId; // Ensure user is logged in
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) {
@@ -40,11 +42,15 @@ const Cart = ({ user }) => {
       .then((res) => res.text())
       .then((message) => {
         alert(message);
-        setCart({ vehicles: [], price: 0, noItems: 0 }); // Ensure cart structure is correct
+        const totalPrice = cart?.price || 0; // Ensure totalPrice is always valid
+        setCart({ vehicles: [], price: 0, noItems: 0 }); // Clear cart
+  
+        // Navigate after ensuring totalPrice is set
+        navigate("/payment", { state: { totalPrice } });
       })
       .catch((err) => console.error("Error checking out:", err));
   };
-
+  
   if (!cart) return <p>Loading cart...</p>;
   if (!cart?.vehicles || cart.vehicles.length === 0) return <p>Your cart is empty.</p>;
 
