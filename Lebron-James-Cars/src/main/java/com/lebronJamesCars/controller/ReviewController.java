@@ -20,11 +20,11 @@ public class ReviewController {
     public ResponseEntity<Review> addReview(
             @PathVariable Long userId,
             @PathVariable Long vehicleId,
-            @RequestParam int rating,
-            @RequestParam String comment) {
-        Review review = reviewService.addReview(userId, vehicleId, rating, comment);
-        return ResponseEntity.ok(review);
+            @RequestBody Review review) {
+        Review savedReview = reviewService.addReview(userId, vehicleId, review.getRating(), review.getComment());
+        return ResponseEntity.ok(savedReview);
     }
+
 
     @GetMapping
     public ResponseEntity<List<Review>> getReviews(@PathVariable Long vehicleId) {
