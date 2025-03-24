@@ -92,7 +92,4 @@ public class VehicleService {
 		return false;
 	}
 	
-	public BigDecimal getLoanAmount(Long id) {
-	    return vehicleRepository.findById(id).map(Vehicle::calculateLoan).orElse(BigDecimal.ZERO);
-	}
 }

@@ -61,12 +61,6 @@ public class VehicleController {
 		return vehicle.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
 	}
 	
-	@GetMapping("/{id}/loan")
-	public ResponseEntity<BigDecimal> getVehicleLoan(@PathVariable Long id) {
-	    BigDecimal loanAmount = vehicleService.getLoanAmount(id);
-	    return ResponseEntity.ok(loanAmount);
-	}
-	
 	@PostMapping
 	public ResponseEntity<Vehicle> createVehicle(@RequestBody Vehicle vehicle){
 		Vehicle savedVehicle = vehicleService.createVehicle(vehicle);
