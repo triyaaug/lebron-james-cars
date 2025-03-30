@@ -82,24 +82,27 @@ const RegisterForm = ({ onLogin }) => {
   };
 
   return (
-    <div style={{ maxWidth: "500px", margin: "auto", padding: "20px", border: "1px solid #ccc", borderRadius: "5px", backgroundColor: "#f9f9f9", boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}>
-      <h2>Register</h2>
-      {message && <p>{message}</p>}
-      <form style={{ display: "flex", flexDirection: "column", gap: "10px" }} onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
-        <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
-        <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
-        <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
-        <input type="text" name="province" placeholder="Province" value={formData.province} onChange={handleChange} style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
-        <input type="text" name="phoneNum" placeholder="Phone Number" value={formData.phoneNum} onChange={handleChange} style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }} />
-        <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "10px", marginTop: "10px" }}>
-          <button style={{ padding: "10px 20px", backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", fontSize: "16px" }} type="submit">Register</button>
-          <Link to="/" style={{ textDecoration: "none", color: "#007bff", alignSelf: "center" }}>Already have an account?</Link>
-        </div>
+    <div style={styles.container}>
+      <h2 style={styles.welcomeTitle}>Welcome to Lebron James’ Cars!</h2>
+      <h3 style={styles.title}>Register</h3>
+      <form style={styles.form} onSubmit={handleSubmit}>
+        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required style={styles.input} />
+        <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required style={styles.input} />
+        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required style={styles.input} />
+        <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} style={styles.input} />
+        <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} style={styles.input} />
+        <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} style={styles.input} />
+        <input type="text" name="province" placeholder="Province" value={formData.province} onChange={handleChange} style={styles.input} />
+        <input type="text" name="phoneNum" placeholder="Phone Number" value={formData.phoneNum} onChange={handleChange} style={styles.input} />
+        <button type="submit" style={styles.registerButton}>Register</button>
       </form>
-      <h3 style={{ marginTop: "20px", textAlign: "center", color: "#333" }}>Registered Users</h3>
+      <p style={styles.loginText}>
+        <Link to="/" style={styles.loginLink}>Already have an account?</Link>
+      </p>
+
+
+
+    {/* <h3 style={styles.subtitle}>Registered Users</h3>
       <ul style={{ listStyle: "none", padding: "0", textAlign: "center" }}>
         {users.length > 0 ? (
           users.map((user, index) => (
@@ -108,9 +111,73 @@ const RegisterForm = ({ onLogin }) => {
         ) : (
           <p></p>
         )}
-      </ul>
+      </ul> */}
     </div>
   );
 };
+
+const styles = {
+  container: {
+    maxWidth: "450px",
+    margin: "2rem auto",
+    padding: "50px 50px",
+    borderRadius: "20px",
+    backgroundColor: "#FFF3B0",
+    textAlign: "center",
+    boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+  },
+  welcomeTitle: {
+    fontSize: "22px",
+    color: "#2c5d63",
+    fontWeight: "500",
+    marginBottom: "10px",
+  },
+  title: {
+    fontSize: "28px",
+    color: "#2c5d63",
+    marginBottom: "25px",
+    fontWeight: "600",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+    padding: "0",
+  },
+  input: {
+    width: "420px",
+    padding: "12px",
+    border: "1px solid black",
+    borderRadius: "10px",
+    fontSize: "16px",
+    backgroundColor: "white",
+  },
+  registerButton: {
+    width: "150px",
+    padding: "12px",
+    backgroundColor: "#9E2A2B",
+    color: "white",
+    fontSize: "16px",
+    fontWeight: "600",
+    border: "none",
+    borderRadius: "10px",
+    cursor: "pointer",
+    marginTop: "10px",
+    alignSelf: "center"
+  },
+  loginText: {
+    marginTop: "16px",
+    fontSize: "14px",
+    color: "#000",
+  },
+  loginLink: {
+    color: "#000",
+    textDecoration: "none",
+    textDecoration: "underline",
+    fontWeight: "500",
+    marginLeft: "5px",
+  }
+};
+
 
 export default RegisterForm;

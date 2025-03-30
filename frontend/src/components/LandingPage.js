@@ -16,37 +16,88 @@ function LandingPage() {
   }, [user, navigate]);
 
   return (
-    <div>
-      <h1>Lebron James Cars</h1>
-      <p>Welcome to Lebron James Cars. Register to join our exclusive car community!</p>
+    <div style={styles.homeContainer}>
+    <h1 style={styles.heading}>Welcome to Lebron James’ Cars</h1>
 
-      {!user && (
-        <div>
-          <Link to="/register">
-            <button>Register</button>
-          </Link>
-          <Link to="/login">
-            <button>Login</button>
-          </Link>
-        </div>
-      )}
+    {!user && (
+      <div style={styles.buttonGroup}>
+        <Link to="/login">
+          <button style={styles.loginButton}>Login</button>
+        </Link>
+        <Link to="/register">
+          <button style={styles.registerButton}>Register</button>
+        </Link>
+      </div>
+    )}
 
-      {!user && (
-        <>
-          <h3>Registered Users</h3>
-          <ul>
-            {users.length > 0 ? (
-              users.map((user, index) => (
-                <li key={index}>{user.name} - {user.email}</li>
-              ))
-            ) : (
-              <p>No registered users yet.</p>
-            )}
-          </ul>
-        </>
-      )}
+    <img
+      src="/lebron.png"
+      alt="Lebron"
+      style={styles.lebronImage}
+    />
+
+    {!user && (
+      <div style={styles.userListSection}>
+        <h3>Registered Users</h3>
+        <ul>
+          {users.length > 0 ? (
+            users.map((user, index) => (
+              <li key={index}>{user.name} - {user.email}</li>
+            ))
+          ) : (
+            <p>No registered users yet.</p>
+          )}
+        </ul>
+      </div>)}
     </div>
   );
 }
+
+const styles = {
+  homeContainer: {
+    textAlign: "center",
+    padding: "40px 20px",
+  },
+  heading: {
+    fontSize: "28px",
+    fontWeight: "500",
+    marginBottom: "30px",
+  },
+  buttonGroup: {
+    display: "flex",
+    justifyContent: "center",
+    gap: "20px",
+    marginBottom: "30px",
+  },
+  loginButton: {
+    padding: "12px 24px",
+    backgroundColor: "#9E2A2B",
+    color: "white",
+    fontSize: "16px",
+    fontWeight: "500",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+  },
+  registerButton: {
+    padding: "12px 24px",
+    backgroundColor: "#E09F3E",
+    color: "white",
+    fontSize: "16px",
+    fontWeight: "500",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+  },
+  lebronImage: {
+    width: "200px",
+    marginTop: "10px",
+  },
+  userListSection: {
+    marginTop: "40px",
+    textAlign: "center",
+  }
+};
+
 
 export default LandingPage;
