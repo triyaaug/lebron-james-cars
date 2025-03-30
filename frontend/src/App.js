@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LoginForm onLogin={handleLogin} />}/>
         <Route path="/login"  element={<LandingPage />}/>
-        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/register" element={<RegisterForm onLogin={handleLogin} />} />
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
         <Route path="/catalog" element={<Catalog user={user} />} />
         <Route path="/cart" element={<Cart user={user} />} />
