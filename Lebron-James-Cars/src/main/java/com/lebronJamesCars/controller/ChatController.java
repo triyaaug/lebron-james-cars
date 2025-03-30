@@ -10,6 +10,7 @@ import com.lebronJamesCars.service.ChatService.Intent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 
 @RestController
@@ -99,15 +100,15 @@ public class ChatController {
             response = responses.get("goodbye");
         }
         // Check for brand inquiries
-        else if (message.contains("brand") || containsBrandNames(message)) {
-            String brand = extractBrand(message);
-            if (brand != null) {
-                vehicles = vehicleService.getVehiclesByBrand(brand);
-                response = formatVehicleResponse(vehicles, "brand", brand);
-            } else {
-                response = "What brand of vehicle are you interested in?";
-            }
-        }
+        else if (containsBrandNames(message)) {  
+    String brand = extractBrand(message);
+    if (brand != null) {
+        vehicles = vehicleService.getVehiclesByBrand(brand);
+        response = formatVehicleResponse(vehicles, "brand", brand);
+    } else {
+        response = "What brand of vehicle are you interested in?";
+    }
+}
         // Check for shape/type inquiries
         else if (message.contains("shape") || message.contains("type") || 
                 message.contains("suv") || message.contains("sedan") || 
@@ -168,26 +169,30 @@ public class ChatController {
         return false;
     }
     
-    private boolean containsBrandNames(String message) {
-        String[] brands = {"toyota", "honda", "ford", "chevrolet", "bmw", "mercedes", "audi", "lexus"};
-        for (String brand : brands) {
-            if (message.contains(brand)) {
-                return true;
-            }
+   private boolean containsBrandNames(String message) {
+    String[] brands = {"toyota", "honda", "ford", "chevrolet", "bmw", "mercedes", "audi", "lexus"};
+    for (String brand : brands) {
+        // Match exact brand name (case-insensitive)
+        Pattern pattern = Pattern.compile("\\b" + brand + "\\b", Pattern.CASE_INSENSITIVE);
+        if (pattern.matcher(message).find()) {
+            return true;
         }
-        return false;
     }
-    
-    private String extractBrand(String message) {
-        // Common car brands to look for
-        String[] brands = {"toyota", "honda", "ford", "chevrolet", "bmw", "mercedes", "audi", "lexus"};
-        for (String brand : brands) {
-            if (message.contains(brand)) {
-                return brand.substring(0, 1).toUpperCase() + brand.substring(1);
-            }
+    return false;
+}
+
+private String extractBrand(String message) {
+    String[] brands = {"toyota", "honda", "ford", "chevrolet", "bmw", "mercedes", "audi", "lexus"};
+    for (String brand : brands) {
+        // Match exact brand name (case-insensitive)
+        Pattern pattern = Pattern.compile("\\b" + brand + "\\b", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(message);
+        if (matcher.find()) {
+            return brand.substring(0, 1).toUpperCase() + brand.substring(1);
         }
-        return null;
     }
+    return null;
+}
     
     private String extractShape(String message) {
         if (message.contains("suv")) return "SUV";

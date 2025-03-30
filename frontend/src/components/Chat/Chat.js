@@ -42,16 +42,12 @@ const Chatbot = () => {
     
     if (input.trim() === '') return;
     
-    // Add user message
     const userMessage = { text: input, sender: 'user' };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
-    
-    // Show typing indicator
     setIsTyping(true);
     
     try {
-      // Send message to backend
       const response = await fetch('http://localhost:8080/chat', {
         method: 'POST',
         headers: {
@@ -62,21 +58,33 @@ const Chatbot = () => {
           sessionId: sessionId
         }),
       });
-      
+
+      // Check for non-JSON responses
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        throw new Error(`Backend error: ${text.substring(0, 100)}`);
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       const data = await response.json();
       
-      // Format the response to handle newlines properly
-      const formattedResponse = data.response.split('\n').map((line, i) => {
-        if (line.trim() === '') return <br key={i} />;
-        return <div key={i}>{line}</div>;
-      });
-      
-      // Add bot response
+      // Fixed line break handling
+      const formattedResponse = data.response.split('\n').map((line, i) => (
+        <React.Fragment key={i}>
+          {line}
+          <br />
+        </React.Fragment>
+      ));
+
       setMessages(prev => [...prev, { text: formattedResponse, sender: 'bot' }]);
     } catch (error) {
-      console.error('Error communicating with the chatbot service:', error);
+      console.error('Chat error:', error);
       setMessages(prev => [...prev, { 
-        text: 'Sorry, I encountered an error. Please try again later.', 
+        text: `Error: ${error.message}`, 
         sender: 'bot' 
       }]);
     }
