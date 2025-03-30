@@ -9,7 +9,7 @@ const VehicleDetails = () => {
   const user = JSON.parse(localStorage.getItem("user")); // Get logged-in user
 
   useEffect(() => {
-    fetch(`http://localhost:8080/vehicles/${id}`)
+    fetch(`http://18.214.94.81:8080/vehicles/${id}`)
       .then((response) => response.json())
       .then((data) => setVehicle(data))
       .catch((error) => console.error("Error fetching vehicle:", error));

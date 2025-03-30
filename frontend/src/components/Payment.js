@@ -9,7 +9,7 @@ const Payment = () => {
   const [paymentStatus, setPaymentStatus] = useState(null);
 
   const handlePayment = () => {
-    fetch("http://localhost:8080/payment", { method: "POST" })
+    fetch("http://18.214.94.81:8080/payment", { method: "POST" })
       .then((res) => res.json())
       .then((success) => {
         if (success) {

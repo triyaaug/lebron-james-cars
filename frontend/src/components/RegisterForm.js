@@ -18,7 +18,7 @@ const RegisterForm = () => {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/users")
+    fetch("http://18.214.94.81:8080/users")
       .then((response) => response.json())
       .then((data) => setUsers(data))
       .catch((error) => console.error("Error fetching users:", error));
@@ -34,7 +34,7 @@ const RegisterForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/users/register", {
+      const response = await fetch("http://18.214.94.81:8080/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

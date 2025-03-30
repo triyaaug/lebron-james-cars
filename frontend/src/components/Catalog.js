@@ -10,7 +10,7 @@ const Catalog = ({ user }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:8080/vehicles?sortBy=${sortBy}&direction=${sortOrder}`)
+    fetch(`http://18.214.94.81:8080/vehicles?sortBy=${sortBy}&direction=${sortOrder}`)
       .then((response) => response.json())
       .then((data) => setVehicles(data))
       .catch((error) => console.error("Error fetching vehicles:", error));
@@ -30,7 +30,7 @@ const Catalog = ({ user }) => {
 
     setAddingToCart((prev) => ({ ...prev, [vehicleID]: true }));
 
-    fetch(`http://localhost:8080/users/${user.userId}/cart/${vehicleID}`, {
+    fetch(`http://18.214.94.81:8080/users/${user.userId}/cart/${vehicleID}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
