@@ -15,6 +15,7 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     List<Vehicle> findByModelYear(int modelYear);
     List<Vehicle> findByVehicleHistory(String vehicleHistory);
     List<Vehicle> findByOnSale(boolean onSale);
+    
 
 
     
