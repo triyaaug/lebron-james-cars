@@ -80,13 +80,13 @@ public class ChatService {
         }
     }
     
-    // Intent detection methods
     public Intent detectIntent(String message) {
         message = message.toLowerCase();
         
         if (containsVehicleDetailQuery(message)) {
             Long vehicleId = extractVehicleId(message);
             if (vehicleId != null) {
+                System.out.println("Detected VEHICLE_DETAILS intent with ID: " + vehicleId);
                 return new Intent("VEHICLE_DETAILS", vehicleId.toString());
             }
         }
@@ -96,18 +96,31 @@ public class ChatService {
             Double downPayment = extractDownPayment(message);
             
             if (vehicleId != null && downPayment != null) {
+                System.out.println("Detected LOAN_CALCULATION intent with ID: " + vehicleId + " and down payment: " + downPayment);
                 return new Intent("LOAN_CALCULATION", vehicleId.toString(), downPayment.toString());
             } else if (vehicleId != null) {
+                System.out.println("Detected LOAN_CALCULATION_PROMPT intent with ID: " + vehicleId);
                 return new Intent("LOAN_CALCULATION_PROMPT", vehicleId.toString());
             }
         }
         
+        if (containsBrandRequest(message)) {
+            String brand = extractBrand(message);
+            if (brand != null) {
+                System.out.println("Detected BRAND_REQUEST intent for brand: " + brand.toLowerCase());
+                return new Intent("BRAND_REQUEST", brand);
+            }
+        }
+        
+        System.out.println("Detected UNKNOWN intent");
         return new Intent("UNKNOWN", "");
     }
     
     private boolean containsVehicleDetailQuery(String message) {
-        return (message.contains("details") || message.contains("information") || message.contains("tell me about"))
-                && extractVehicleId(message) != null;
+        // Check for keywords related to vehicle details and ensure an ID is present
+        return (message.contains("details") || message.contains("information") || 
+                message.contains("tell me about") || message.contains("show me")) &&
+               extractVehicleId(message) != null;
     }
     
     private boolean containsLoanCalculationRequest(String message) {
@@ -116,25 +129,22 @@ public class ChatService {
     }
     
     private Long extractVehicleId(String message) {
-        Pattern pattern = Pattern.compile("\\bid\\s*(\\d+)\\b|\\bvehicle\\s*(\\d+)\\b|\\bcar\\s*(\\d+)\\b");
+        // Match patterns like "vehicle 5", "id 5", "car 5"
+        Pattern pattern = Pattern.compile("\\b(vehicle|id|car)\\s*(\\d+)\\b", Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(message);
         
         if (matcher.find()) {
-            for (int i = 1; i <= matcher.groupCount(); i++) {
-                if (matcher.group(i) != null) {
-                    return Long.parseLong(matcher.group(i));
-                }
-            }
+            return Long.parseLong(matcher.group(2)); // Return the captured number
         }
         
-        // Try to find just a number in the message
+        // Fallback: Try to match just a standalone number
         pattern = Pattern.compile("\\b(\\d+)\\b");
         matcher = pattern.matcher(message);
         if (matcher.find()) {
             return Long.parseLong(matcher.group(1));
         }
         
-        return null;
+        return null; // Return null if no ID is found
     }
     
     private Double extractDownPayment(String message) {
@@ -149,6 +159,48 @@ public class ChatService {
             }
         }
         
+        return null;
+    }
+    
+    private boolean containsBrandRequest(String message) {
+    	String[] brands = {
+    		    "toyota", "honda", "ford", "chevrolet", "bmw", "mercedes-benz", "audi", "lexus",
+    		    "tesla", "nissan", "hyundai", "kia", "jeep", "chrysler", "subaru", "volvo",
+    		    "porsche", "mazda", "mitsubishi", "suzuki", "alfa romeo", "aston martin", "bentley",
+    		    "ferrari", "lamborghini", "rolls royce", "mclaren", "jaguar", "land rover", "renault",
+    		    "dacia", "seat", "skoda", "tata", "suzuki", "datsun"
+    		};
+    	for (String brand : brands) {
+            Pattern pattern = Pattern.compile("\\b" + Pattern.quote(brand) + "\\b", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(message);
+            if (matcher.find()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private String extractBrand(String message) {
+    	String[] brands = {
+    		    "toyota", "honda", "ford", "chevrolet", "bmw", "mercedes-benz", "audi", "lexus",
+    		    "tesla", "nissan", "hyundai", "kia", "jeep", "chrysler", "subaru", "volvo",
+    		    "porsche", "mazda", "mitsubishi", "suzuki", "alfa romeo", "aston martin", "bentley",
+    		    "ferrari", "lamborghini", "rolls royce", "mclaren", "jaguar", "land rover", "renault",
+    		    "dacia", "seat", "skoda", "tata", "suzuki", "datsun"
+    		};
+    	for (String brand : brands) {
+            String brandLower = brand.toLowerCase(); // Normalize brand
+            
+            // Check if the brand is in the message as a whole word
+            if (message.matches(".*\\b" + brandLower + "\\b.*") || 
+                message.contains(" " + brandLower + " ") ||
+                message.startsWith(brandLower + " ") ||
+                message.endsWith(" " + brandLower)) {
+                
+                // Capitalize the first letter only
+                return brand.substring(0, 1).toUpperCase() + brand.substring(1);
+            }
+        }
         return null;
     }
     

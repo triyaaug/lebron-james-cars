@@ -96,7 +96,6 @@ const Chatbot = () => {
   const queryExamples = [
     "Show me Toyota vehicles",
     "What SUVs do you have?",
-    "Show me vehicles from 2022",
     "What are your hot deals?",
     "Tell me about vehicle ID 5",
   ];
@@ -110,7 +109,7 @@ const Chatbot = () => {
     <div className="chatbot-container">
       {/* Chat toggle button */}
       <button className="chat-toggle" onClick={toggleChat}>
-        {isOpen ? '×' : '🚗'}
+        {isOpen ? '×' : '💬'}
       </button>
       
       {/* Chat window */}

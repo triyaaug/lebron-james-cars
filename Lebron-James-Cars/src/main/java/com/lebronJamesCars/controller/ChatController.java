@@ -10,6 +10,7 @@ import com.lebronJamesCars.service.ChatService.Intent;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
@@ -30,7 +31,7 @@ public class ChatController {
         
         // Initialize with default responses
         responses.put("greeting", "Welcome to LeBron James Cars! How can I help you today?");
-        responses.put("help", "I can help you find vehicles by brand, shape, model year, or show you our hot deals. You can also ask about specific vehicles by ID or calculate loan payments.");
+        responses.put("help", "I can help you find vehicles by brand, shape, model year, or show you our hot deals");
         responses.put("goodbye", "Thank you for visiting LeBron James Cars! Have a great day!");
         responses.put("hot_deals", "Let me show you our current hot deals!");
         responses.put("fallback", "I'm not sure I understand. Try asking about our vehicle inventory, specific brands, or hot deals.");
@@ -41,10 +42,10 @@ public class ChatController {
         String message = request.getMessage().toLowerCase().trim();
         String response;
         List<Vehicle> vehicles = null;
-        
+
         // First check for advanced intents using our service
         Intent intent = chatService.detectIntent(message);
-        
+
         if ("VEHICLE_DETAILS".equals(intent.getType())) {
             // Handle vehicle details request
             Long vehicleId = Long.parseLong(intent.getParams()[0]);
@@ -74,20 +75,11 @@ public class ChatController {
             sessionData.put("lastVehicleId", vehicleId);
             sessionData.put("lastIntent", "LOAN_CALCULATION_PROMPT");
             
-        } else if (message.contains("down payment") && sessionData.containsKey("lastIntent") 
-                && "LOAN_CALCULATION_PROMPT".equals(sessionData.get("lastIntent"))) {
-            // User is providing down payment after being prompted
-            Double downPayment = extractAmount(message);
-            if (downPayment != null && sessionData.containsKey("lastVehicleId")) {
-                Long vehicleId = (Long) sessionData.get("lastVehicleId");
-                response = chatService.calculateLoanPayment(vehicleId, downPayment);
-                
-                // Update conversation context
-                sessionData.put("lastDownPayment", downPayment);
-                sessionData.put("lastIntent", "LOAN_CALCULATION");
-            } else {
-                response = "I couldn't understand the down payment amount. Please provide a number, for example '10000'.";
-            }
+        } else if ("BRAND_REQUEST".equals(intent.getType())) {
+            // Handle brand request
+            String brand = intent.getParams()[0];
+            vehicles = vehicleService.getVehiclesByBrand(brand);
+            response = formatVehicleResponse(vehicles, "brand", brand);
         }
         // Check for basic intents
         else if (containsGreeting(message)) {
@@ -101,14 +93,14 @@ public class ChatController {
         }
         // Check for brand inquiries
         else if (containsBrandNames(message)) {  
-    String brand = extractBrand(message);
-    if (brand != null) {
-        vehicles = vehicleService.getVehiclesByBrand(brand);
-        response = formatVehicleResponse(vehicles, "brand", brand);
-    } else {
-        response = "What brand of vehicle are you interested in?";
-    }
-}
+            String brand = extractBrand(message);
+            if (brand != null) {
+                vehicles = vehicleService.getVehiclesByBrand(brand);
+                response = formatVehicleResponse(vehicles, "brand", brand);
+            } else {
+                response = "What brand of vehicle are you interested in?";
+            }
+        }
         // Check for shape/type inquiries
         else if (message.contains("shape") || message.contains("type") || 
                 message.contains("suv") || message.contains("sedan") || 
@@ -170,24 +162,42 @@ public class ChatController {
     }
     
    private boolean containsBrandNames(String message) {
-    String[] brands = {"toyota", "honda", "ford", "chevrolet", "bmw", "mercedes", "audi", "lexus"};
-    for (String brand : brands) {
-        // Match exact brand name (case-insensitive)
-        Pattern pattern = Pattern.compile("\\b" + brand + "\\b", Pattern.CASE_INSENSITIVE);
-        if (pattern.matcher(message).find()) {
-            return true;
-        }
-    }
-    return false;
-}
+	   String[] brands = {
+			    "toyota", "honda", "ford", "chevrolet", "bmw", "mercedes-benz", "audi", "lexus",
+			    "tesla", "nissan", "hyundai", "kia", "jeep", "chrysler", "subaru", "volvo",
+			    "porsche", "mazda", "mitsubishi", "suzuki", "alfa romeo", "aston martin", "bentley",
+			    "ferrari", "lamborghini", "rolls royce", "mclaren", "jaguar", "land rover", "renault",
+			    "dacia", "seat", "skoda", "tata", "suzuki", "datsun"
+			};
+	   for (String brand : brands) {
+	        Pattern pattern = Pattern.compile("\\b" + Pattern.quote(brand) + "\\b", Pattern.CASE_INSENSITIVE);
+	        Matcher matcher = pattern.matcher(message);
+	        if (matcher.find()) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
 
 private String extractBrand(String message) {
-    String[] brands = {"toyota", "honda", "ford", "chevrolet", "bmw", "mercedes", "audi", "lexus"};
-    for (String brand : brands) {
-        // Match exact brand name (case-insensitive)
-        Pattern pattern = Pattern.compile("\\b" + brand + "\\b", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(message);
-        if (matcher.find()) {
+	String[] brands = {
+		    "toyota", "honda", "ford", "chevrolet", "bmw", "mercedes-benz", "audi", "lexus",
+		    "tesla", "nissan", "hyundai", "kia", "jeep", "chrysler", "subaru", "volvo",
+		    "porsche", "mazda", "mitsubishi", "suzuki", "alfa romeo", "aston martin", "bentley",
+		    "ferrari", "lamborghini", "rolls royce", "mclaren", "jaguar", "land rover", "renault",
+		    "dacia", "seat", "skoda", "tata", "suzuki", "datsun"
+		};
+	for (String brand : brands) {
+        String brandLower = brand.toLowerCase(); // Normalize brand
+        
+        // Check if the brand is in the message as a whole word
+        if (message.matches(".*\\b" + brandLower + "\\b.*") || 
+            message.contains(" " + brandLower + " ") ||
+            message.startsWith(brandLower + " ") ||
+            message.endsWith(" " + brandLower)) {
+            
+            // Capitalize the first letter only
             return brand.substring(0, 1).toUpperCase() + brand.substring(1);
         }
     }
