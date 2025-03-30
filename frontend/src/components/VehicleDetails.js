@@ -6,6 +6,7 @@ import ReviewList from "./ReviewList";
 const VehicleDetails = () => {
   const { id } = useParams();
   const [vehicle, setVehicle] = useState(null);
+  const [showCO2, setShowCO2] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const [addingToCart, setAddingToCart] = useState(false);
 
@@ -156,15 +157,63 @@ const VehicleDetails = () => {
                 <div style={{ color: "#666", fontSize: "14px" }}>Mileage</div>
                 <div style={{ fontWeight: "500" }}>{vehicle.mileage} km</div>
               </div>
-              <div style={{ 
-                backgroundColor: "#FFFFFF",
-                padding: "15px",
-                borderRadius: "5px",
-                border: "1px solid #D9D9D9"
-              }}>
-                <div style={{ color: "#666", fontSize: "14px" }}>CO2 Emission</div>
-                <div style={{ fontWeight: "500" }}>{vehicle.co2Emission}</div>
+              
+              {/* CO2 Emission - Special Styled Component */}
+              <div 
+                onClick={() => setShowCO2(!showCO2)}
+                style={{ 
+                  backgroundColor: showCO2 ? "#E3F2FD" : "#FFFFFF",
+                  padding: "15px",
+                  borderRadius: "5px",
+                  border: showCO2 ? "1px solid #1976D2" : "1px solid #D9D9D9",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  ":hover": {
+                    backgroundColor: showCO2 ? "#E3F2FD" : "#F5F5F5"
+                  }
+                }}
+              >
+                {showCO2 ? (
+                  <>
+                    <div style={{ color: "#1976D2", fontSize: "14px" }}>CO2 Emission</div>
+                    <div style={{ fontWeight: "500", color: "#0D47A1" }}>{vehicle.co2Emission}</div>
+                  </>
+                ) : (
+                  <div style={{ 
+                    display: "flex", 
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100%"
+                  }}>
+                    <div style={{ 
+                      color: "#1976D2",
+                      fontSize: "14px",
+                      textAlign: "center",
+                      marginBottom: "5px"
+                    }}>
+                      Wondering about
+                    </div>
+                    <div style={{ 
+                      color: "#1976D2",
+                      fontWeight: "bold",
+                      textAlign: "center",
+                      fontSize: "16px"
+                    }}>
+                      CO2 Emissions?
+                    </div>
+                    <div style={{ 
+                      color: "#1976D2",
+                      fontSize: "12px",
+                      textAlign: "center",
+                      marginTop: "5px"
+                    }}>
+                      Click to reveal
+                    </div>
+                  </div>
+                )}
               </div>
+              
               <div style={{ 
                 backgroundColor: "#FFFFFF",
                 padding: "15px",
@@ -222,8 +271,6 @@ const VehicleDetails = () => {
 
       {/* Reviews Section */}
       <div style={{ marginTop: "40px" }}>
-        
-        
         {/* Review Form */}
         {user && <ReviewForm vehicleId={id} userId={user.userId} onReviewAdded={() => window.location.reload()} />}
 
