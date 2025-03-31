@@ -28,7 +28,7 @@ function App() {
     navigate("/");
   };
 
-  const showNavbar = location.pathname !== "/" && location.pathname !== "/register";
+  const showNavbar = location.pathname !== "/";
 
   return (
     <div>

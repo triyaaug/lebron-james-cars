@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAllUsers } from "../services/userService";
+import lebronImage from '../img/lebron.jpg';
 
 function LandingPage() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -17,38 +18,24 @@ function LandingPage() {
 
   return (
     <div style={styles.homeContainer}>
-    <h1 style={styles.heading}>Welcome to Lebron James’ Cars</h1>
+      <h1 style={styles.heading}>Welcome to Lebron James' Cars</h1>
 
-    {!user && (
-      <div style={styles.buttonGroup}>
-        <Link to="/login">
-          <button style={styles.loginButton}>Login</button>
-        </Link>
-        <Link to="/register">
-          <button style={styles.registerButton}>Register</button>
-        </Link>
-      </div>
-    )}
+      {!user && (
+        <div style={styles.buttonGroup}>
+          <Link to="/login">
+            <button style={styles.loginButton}>Login</button>
+          </Link>
+          <Link to="/register">
+            <button style={styles.registerButton}>Register</button>
+          </Link>
+        </div>
+      )}
 
-    <img
-      src="/lebron.png"
-      alt="Lebron"
-      style={styles.lebronImage}
-    />
-
-    {!user && (
-      <div style={styles.userListSection}>
-        <h3>Registered Users</h3>
-        <ul>
-          {users.length > 0 ? (
-            users.map((user, index) => (
-              <li key={index}>{user.name} - {user.email}</li>
-            ))
-          ) : (
-            <p>No registered users yet.</p>
-          )}
-        </ul>
-      </div>)}
+      <img
+        src={lebronImage}
+        alt="Lebron"
+        style={styles.lebronImage}
+      />
     </div>
   );
 }
@@ -57,47 +44,54 @@ const styles = {
   homeContainer: {
     textAlign: "center",
     padding: "40px 20px",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   heading: {
-    fontSize: "28px",
-    fontWeight: "500",
-    marginBottom: "30px",
+    fontSize: "60px",
+    fontWeight: "600",
+    marginBottom: "50px",
   },
   buttonGroup: {
     display: "flex",
     justifyContent: "center",
-    gap: "20px",
-    marginBottom: "30px",
+    gap: "200px",
+    marginBottom: "0px", 
   },
   loginButton: {
-    padding: "12px 24px",
+    padding: "16px 32px",
     backgroundColor: "#9E2A2B",
     color: "white",
-    fontSize: "16px",
-    fontWeight: "500",
+    fontSize: "20px",
+    fontWeight: "600",
     border: "none",
-    borderRadius: "8px",
+    borderRadius: "10px",
     cursor: "pointer",
+    transition: "transform 0.2s",
+    ":hover": {
+      transform: "scale(1.05)",
+    },
   },
   registerButton: {
-    padding: "12px 24px",
+    padding: "16px 32px",
     backgroundColor: "#E09F3E",
     color: "white",
-    fontSize: "16px",
-    fontWeight: "500",
+    fontSize: "20px",
+    fontWeight: "600",
     border: "none",
-    borderRadius: "8px",
+    borderRadius: "10px",
     cursor: "pointer",
+    transition: "transform 0.2s",
+    ":hover": {
+      transform: "scale(1.05)",
+    },
   },
   lebronImage: {
-    width: "200px",
-    marginTop: "10px",
+    width: "1000px",
+    maxWidth: "90%",
+    marginTop: "0px", 
   },
-  userListSection: {
-    marginTop: "40px",
-    textAlign: "center",
-  }
 };
-
 
 export default LandingPage;

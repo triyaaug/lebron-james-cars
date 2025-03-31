@@ -2,20 +2,16 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { getAllUsers } from "../services/userService";
 
-const LoginForm = ({ onLogin }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const [users, setUsers] = useState([]);
-
+const LoginForm = ({ onLogin = () => {} }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
-  const navigate = useNavigate(); // Hook for navigation
+  const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
 
-  // Handle input change
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -24,28 +20,24 @@ const LoginForm = ({ onLogin }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-  
+
       if (response.ok) {
         const user = await response.json();
-        localStorage.setItem("user", JSON.stringify(user)); // Store user in localStorage
+        localStorage.setItem("user", JSON.stringify(user));
         setMessage("Login successful!");
-        onLogin(user); // Pass user data to parent component
+        onLogin(user);
         navigate("/catalog");
       } else {
         setMessage("Invalid email or password.");
+        const users = await getAllUsers();
+        setUsers(users);
       }
     } catch (error) {
       console.error("Error:", error);
       setMessage("Failed to connect to the server.");
     }
-
-    if (user) {
-      navigate("/catalog"); // Redirect logged-in users to the catalog
-    } else {
-      getAllUsers().then(setUsers); // Fetch registered users only if not logged in
-    }
   };
-  
+
   return (
     <div style={styles.container}>
       <h2 style={styles.welcome}>Welcome back!</h2>
@@ -75,17 +67,19 @@ const LoginForm = ({ onLogin }) => {
           required
         />
 
-        <button style={styles.loginButton} type="submit">Login</button>
+        <button style={styles.loginButton} type="submit">
+          Login
+        </button>
       </form>
 
       <p style={styles.signupText}>
         Don't have an account?{" "}
-        <Link to="/register" style={styles.signupLink}>Sign up here!</Link>
+        <Link to="/register" style={styles.signupLink}>
+          Sign up here!
+        </Link>
       </p>
     </div>
   );
-
-
 };
 
 const styles = {
@@ -97,7 +91,7 @@ const styles = {
     backgroundColor: "#FFF3B0",
     textAlign: "center",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
-    marginTop: "30px"
+    marginTop: "30px",
   },
   welcome: {
     fontSize: "24px",
@@ -144,7 +138,7 @@ const styles = {
     border: "none",
     marginTop: "10px",
     transition: "0.3s",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   signupText: {
     marginTop: "10px",
@@ -157,6 +151,5 @@ const styles = {
     fontWeight: "bold",
   },
 };
-
 
 export default LoginForm;

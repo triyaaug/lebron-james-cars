@@ -11,13 +11,11 @@ const Catalog = ({ user }) => {
   const [brand, setBrand] = useState("");
   const [shape, setShape] = useState("");
   const [modelYear, setModelYear] = useState("");
-  const [vehicleHistory, setVehicleHistory] = useState("");
   const [showOnSale, setShowOnSale] = useState(null);
 
   // Available filter options
-  const brandOptions = ["Toyota", "Honda", "Ford", "BMW", "Mercedes", "Tesla"];
+  const brandOptions = ["Toyota", "Honda", "Ford", "BMW", "Mercedes-Benz", "Tesla", "Nissan", "Hyundai", "Subaru"];
   const shapeOptions = ["Sedan", "Compact", "Wagon"];
-  const vehicleHistoryOptions = ["Clean", "Minor Damage", "Salvage"];
   const yearOptions = [2020, 2021, 2022, 2023, 2024];
 
   const navigate = useNavigate();
@@ -34,7 +32,6 @@ const Catalog = ({ user }) => {
     if (brand) params.append("brand", brand);
     if (shape) params.append("shape", shape);
     if (modelYear) params.append("modelYear", modelYear);
-    if (vehicleHistory) params.append("vehicleHistory", vehicleHistory);
     if (showOnSale !== null) params.append("onSale", showOnSale);
 
     // Make API request with all parameters
@@ -42,7 +39,7 @@ const Catalog = ({ user }) => {
       .then((response) => response.json())
       .then((data) => setVehicles(data))
       .catch((error) => console.error("Error fetching vehicles:", error));
-  }, [sortBy, sortOrder, brand, shape, modelYear, vehicleHistory, showOnSale]);
+  }, [sortBy, sortOrder, brand, shape, modelYear, showOnSale]);
 
   const handleClick = (id) => {
     navigate(`/vehicle/${id}`);
@@ -80,7 +77,6 @@ const Catalog = ({ user }) => {
     setBrand("");
     setShape("");
     setModelYear("");
-    setVehicleHistory("");
     setShowOnSale(null);
   };
 
@@ -157,28 +153,6 @@ const Catalog = ({ user }) => {
               {yearOptions.map((y) => (
                 <option key={y} value={y}>
                   {y}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* History Filter */}
-          <div style={{ marginBottom: "15px" }}>
-            <label style={{ display: "block", marginBottom: "5px", fontWeight: "500" }}>History: </label>
-            <select 
-              onChange={(e) => setVehicleHistory(e.target.value)} 
-              value={vehicleHistory}
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "5px",
-                border: "1px solid #D9D9D9"
-              }}
-            >
-              <option value="">Any History</option>
-              {vehicleHistoryOptions.map((h) => (
-                <option key={h} value={h}>
-                  {h}
                 </option>
               ))}
             </select>
@@ -261,7 +235,7 @@ const Catalog = ({ user }) => {
         <h2 style={{ color: "#335C67", marginBottom: "20px" }}>Car Catalog</h2>
 
         {/* Active Filters Display */}
-        {(brand || shape || modelYear || vehicleHistory || showOnSale !== null) && (
+        {(brand || shape || modelYear || showOnSale !== null) && (
           <div style={{ 
             marginBottom: "20px", 
             padding: "15px", 
@@ -301,16 +275,6 @@ const Catalog = ({ user }) => {
                 fontSize: "14px"
               }}>
                 Year: {modelYear}
-              </span>
-            )}
-            {vehicleHistory && (
-              <span style={{ 
-                backgroundColor: "#E0E0E0", 
-                padding: "5px 10px", 
-                borderRadius: "15px",
-                fontSize: "14px"
-              }}>
-                History: {vehicleHistory}
               </span>
             )}
             {showOnSale === true && (
