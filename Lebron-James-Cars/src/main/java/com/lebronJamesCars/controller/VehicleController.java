@@ -8,7 +8,6 @@ import com.lebronJamesCars.service.VehicleService;
 
 @RestController
 @RequestMapping("/vehicles")
-@CrossOrigin(origins = "*") // Add CORS if needed
 public class VehicleController {
 	
 	private final VehicleService vehicleService;
