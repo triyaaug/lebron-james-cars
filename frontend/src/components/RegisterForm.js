@@ -15,14 +15,6 @@ const RegisterForm = ({ onLogin }) => {
   });
 
   const [message, setMessage] = useState("");
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:8080/users")
-      .then((response) => response.json())
-      .then((data) => setUsers(data))
-      .catch((error) => console.error("Error fetching users:", error));
-  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,7 +32,6 @@ const RegisterForm = ({ onLogin }) => {
       });
 
       if (response.ok) {
-        // Auto login after successful registration
         const loginResponse = await fetch("http://localhost:8080/users/login", {
           method: "POST",
           headers: {
@@ -60,7 +51,6 @@ const RegisterForm = ({ onLogin }) => {
           setMessage("Registration successful, but auto login failed. Please login manually.");
         }
 
-        // Clear form
         setFormData({
           name: "",
           email: "",
@@ -86,32 +76,26 @@ const RegisterForm = ({ onLogin }) => {
       <h2 style={styles.welcomeTitle}>Welcome to Lebron James’ Cars!</h2>
       <h3 style={styles.title}>Register</h3>
       <form style={styles.form} onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} required style={styles.input} />
-        <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} required style={styles.input} />
-        <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required style={styles.input} />
-        <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} style={styles.input} />
-        <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} style={styles.input} />
-        <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} style={styles.input} />
-        <input type="text" name="province" placeholder="Province" value={formData.province} onChange={handleChange} style={styles.input} />
-        <input type="text" name="phoneNum" placeholder="Phone Number" value={formData.phoneNum} onChange={handleChange} style={styles.input} />
+        {Object.keys(formData).map((key) => (
+          key !== "role" && (
+            <input
+              key={key}
+              type={key === "email" ? "email" : key === "password" ? "password" : "text"}
+              name={key}
+              placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
+              value={formData[key]}
+              onChange={handleChange}
+              required={key === "name" || key === "email" || key === "password"}
+              style={styles.input}
+            />
+          )
+        ))}
         <button type="submit" style={styles.registerButton}>Register</button>
       </form>
+      {message && <p style={{ color: "red" }}>{message}</p>}
       <p style={styles.loginText}>
         <Link to="/" style={styles.loginLink}>Already have an account?</Link>
       </p>
-
-
-
-    {/* <h3 style={styles.subtitle}>Registered Users</h3>
-      <ul style={{ listStyle: "none", padding: "0", textAlign: "center" }}>
-        {users.length > 0 ? (
-          users.map((user, index) => (
-            <li style={{ padding: "5px 0", color: "#555" }} key={index}>{user.name} - {user.email}</li>
-          ))
-        ) : (
-          <p></p>
-        )}
-      </ul> */}
     </div>
   );
 };
@@ -163,7 +147,7 @@ const styles = {
     borderRadius: "10px",
     cursor: "pointer",
     marginTop: "10px",
-    alignSelf: "center"
+    alignSelf: "center",
   },
   loginText: {
     marginTop: "16px",
@@ -172,12 +156,10 @@ const styles = {
   },
   loginLink: {
     color: "#000",
-    textDecoration: "none",
     textDecoration: "underline",
     fontWeight: "500",
     marginLeft: "5px",
-  }
+  },
 };
-
 
 export default RegisterForm;
