@@ -48,7 +48,7 @@ const Chatbot = () => {
     setIsTyping(true);
     
     try {
-      const response = await fetch('http://localhost:8080/chat', {
+      const response = await fetch('http://18.214.94.81:8080/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
