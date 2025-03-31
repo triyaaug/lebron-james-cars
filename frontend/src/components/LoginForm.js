@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { getAllUsers } from "../services/userService";
 
-const LoginForm = ({ onLogin = () => {} }) => {
+const LoginForm = ({ onLogin }) => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
-  const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -14,6 +12,8 @@ const LoginForm = ({ onLogin = () => {} }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage(""); // Clear previous messages
+
     try {
       const response = await fetch("http://localhost:8080/users/login", {
         method: "POST",
@@ -23,17 +23,13 @@ const LoginForm = ({ onLogin = () => {} }) => {
 
       if (response.ok) {
         const user = await response.json();
-        localStorage.setItem("user", JSON.stringify(user));
-        setMessage("Login successful!");
         onLogin(user);
         navigate("/catalog");
       } else {
         setMessage("Invalid email or password.");
-        const users = await getAllUsers();
-        setUsers(users);
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Login error:", error);
       setMessage("Failed to connect to the server.");
     }
   };
