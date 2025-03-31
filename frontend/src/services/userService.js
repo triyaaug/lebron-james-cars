@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8080/users"; 
+const API_URL = "http://18.214.94.81:8080/users"; // Adjust port if needed
 
 export const getAllUsers = async () => {
   const response = await axios.get(API_URL);
