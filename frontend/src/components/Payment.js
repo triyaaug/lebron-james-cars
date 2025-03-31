@@ -30,7 +30,6 @@ const Payment = () => {
       setPaymentStatus("Payment successful! Redirecting...");
       setTimeout(() => navigate("/catalog"), 2000);
     }, 1500);
-
   };
 
   return (

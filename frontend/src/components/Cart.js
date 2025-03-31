@@ -25,7 +25,9 @@ const Cart = ({ user }) => {
   }, [user]);
 
   const handleRemove = (vehicleId) => {
+
     setIsProcessing(true);
+
     fetch(`http://18.214.94.81:8080/users/${userId}/cart/${vehicleId}`, { method: "DELETE" })
       .then((res) => res.json())
       .then((updatedCart) => {
@@ -41,7 +43,9 @@ const Cart = ({ user }) => {
   };
 
   const handleCheckout = () => {
+
     setIsProcessing(true);
+
     fetch(`http://18.214.94.81:8080/users/${userId}/cart/checkout`, { method: "POST" })
       .then((res) => res.text())
       .then((message) => {

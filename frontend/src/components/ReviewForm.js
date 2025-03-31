@@ -31,7 +31,6 @@ const ReviewForm = ({ vehicleId, userId, onReviewAdded }) => {
       return;
     }
 
-
     try {
       const response = await fetch(`http://18.214.94.81:8080/vehicles/${vehicleId}/reviews/${userId}`, {
         method: "POST",

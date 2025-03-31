@@ -23,6 +23,7 @@ const Catalog = ({ user }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+
     // Build query parameters
     const params = new URLSearchParams();
 
@@ -39,6 +40,7 @@ const Catalog = ({ user }) => {
 
     // Make API request with all parameters
     fetch(`http://18.214.94.81:8080/vehicles?${params.toString()}`)
+
       .then((response) => response.json())
       .then((data) => setVehicles(data))
       .catch((error) => console.error("Error fetching vehicles:", error));
