@@ -15,7 +15,7 @@ const Cart = ({ user }) => {
 
     console.log(`Fetching cart for user ID: ${user.userId}`);
 
-    fetch(`http://localhost:8080/users/${user.userId}/cart`)
+    fetch(`http://18.214.94.81:8080/users/${user.userId}/cart`)
       .then((response) => response.json())
       .then((data) => {
         console.log("Cart data received:", data);
@@ -26,7 +26,7 @@ const Cart = ({ user }) => {
 
   const handleRemove = (vehicleId) => {
     setIsProcessing(true);
-    fetch(`http://localhost:8080/users/${userId}/cart/${vehicleId}`, { method: "DELETE" })
+    fetch(`http://18.214.94.81:8080/users/${userId}/cart/${vehicleId}`, { method: "DELETE" })
       .then((res) => res.json())
       .then((updatedCart) => {
         console.log("Updated cart after removal:", updatedCart);
@@ -42,7 +42,7 @@ const Cart = ({ user }) => {
 
   const handleCheckout = () => {
     setIsProcessing(true);
-    fetch(`http://localhost:8080/users/${userId}/cart/checkout`, { method: "POST" })
+    fetch(`http://18.214.94.81:8080/users/${userId}/cart/checkout`, { method: "POST" })
       .then((res) => res.text())
       .then((message) => {
         alert(message);

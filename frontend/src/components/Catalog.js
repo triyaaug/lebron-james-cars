@@ -38,7 +38,7 @@ const Catalog = ({ user }) => {
     if (showOnSale !== null) params.append("onSale", showOnSale);
 
     // Make API request with all parameters
-    fetch(`http://localhost:8080/vehicles?${params.toString()}`)
+    fetch(`http://18.214.94.81:8080/vehicles?${params.toString()}`)
       .then((response) => response.json())
       .then((data) => setVehicles(data))
       .catch((error) => console.error("Error fetching vehicles:", error));
@@ -56,7 +56,7 @@ const Catalog = ({ user }) => {
 
     setAddingToCart((prev) => ({ ...prev, [vehicleID]: true }));
 
-    fetch(`http://localhost:8080/users/${user.userId}/cart/${vehicleID}`, {
+    fetch(`http://18.214.94.81:8080/users/${user.userId}/cart/${vehicleID}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })

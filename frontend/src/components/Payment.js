@@ -16,6 +16,7 @@ const Payment = () => {
     cvv: "",
   });
 
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -29,6 +30,7 @@ const Payment = () => {
       setPaymentStatus("Payment successful! Redirecting...");
       setTimeout(() => navigate("/catalog"), 2000);
     }, 1500);
+
   };
 
   return (

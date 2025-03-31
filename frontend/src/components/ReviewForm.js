@@ -31,8 +31,9 @@ const ReviewForm = ({ vehicleId, userId, onReviewAdded }) => {
       return;
     }
 
+
     try {
-      const response = await fetch(`http://localhost:8080/vehicles/${vehicleId}/reviews/${userId}`, {
+      const response = await fetch(`http://18.214.94.81:8080/vehicles/${vehicleId}/reviews/${userId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ rating: Number(rating), comment }),

@@ -4,7 +4,7 @@ const ReviewList = ({ vehicleId }) => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/vehicles/${vehicleId}/reviews`)
+    fetch(`http://18.214.94.81:8080/vehicles/${vehicleId}/reviews`)
       .then((response) => response.json())
       .then((data) => setReviews(data))
       .catch((error) => console.error("Error fetching reviews:", error));
