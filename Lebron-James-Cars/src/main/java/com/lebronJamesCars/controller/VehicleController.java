@@ -1,17 +1,14 @@
 package com.lebronJamesCars.controller;
-
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import com.lebronJamesCars.entity.Vehicle;
 import com.lebronJamesCars.service.VehicleService;
 
 @RestController
 @RequestMapping("/vehicles")
+@CrossOrigin(origins = "*") // Add CORS if needed
 public class VehicleController {
 	
 	private final VehicleService vehicleService;
@@ -21,39 +18,43 @@ public class VehicleController {
 	}
 	
 	@GetMapping
-    public List<Vehicle> getAllVehicles(
+    public List<Vehicle> getVehicles(
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String shape,
+            @RequestParam(required = false) Integer modelYear,
+            @RequestParam(required = false) String vehicleHistory,
+            @RequestParam(required = false) Boolean onSale,
             @RequestParam(required = false, defaultValue = "price") String sortBy,
             @RequestParam(required = false, defaultValue = "asc") String direction) {
-        return vehicleService.getAllVehicles(sortBy, direction);
+        
+        return vehicleService.getFilteredAndSortedVehicles(
+            brand, shape, modelYear, vehicleHistory, onSale, sortBy, direction);
     }
 	
-	//filters
-	//brand
-    @GetMapping("/brand/{brand}")
+	@GetMapping("/brand/{brand}")
     public List<Vehicle> getVehiclesByBrand(@PathVariable String brand) {
         return vehicleService.getVehiclesByBrand(brand);
     }
-	//shape
-    @GetMapping("/shape/{shape}")
+	
+	@GetMapping("/shape/{shape}")
     public List<Vehicle> getVehiclesByShape(@PathVariable String shape) {
         return vehicleService.getVehiclesByShape(shape);
     }
-    //model year
+    
     @GetMapping("/modelYear/{modelYear}")
     public List<Vehicle> getVehiclesByModelYear(@PathVariable int modelYear) {
         return vehicleService.getVehiclesByModelYear(modelYear);
     }
-    //vehicle history
+    
     @GetMapping("/vehicleHistory/{vehicleHistory}")
     public List<Vehicle> getVehiclesByVehicleHistory(@PathVariable String vehicleHistory) {
         return vehicleService.getVehiclesByVehicleHistory(vehicleHistory);
     }
-    //hot deals
+    
     @GetMapping("/onSale/{onSale}")
     public List<Vehicle> getVehiclesByOnSale(@PathVariable boolean onSale) {
         return vehicleService.getVehiclesByOnSale(onSale);
     }
-    
     
 	@GetMapping("/{id}")
 	public ResponseEntity<Vehicle> getVehicleById(@PathVariable Long id){
@@ -81,5 +82,4 @@ public class VehicleController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
 }

@@ -9,9 +9,17 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import LoanCalculator from "./components/LoanCalculator";
 import Payment from "./components/Payment";
+import Chat from "./components/Chat/Chat";
 
 function App() {
-  const [user, setUser] = useState(() => JSON.parse(localStorage.getItem("user")) || null);
+  const [user, setUser] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("user")) || null;
+    } catch {
+      return null;
+    }
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,15 +35,23 @@ function App() {
     navigate("/");
   };
 
-  const showNavbar = location.pathname !== "/" && location.pathname !== "/register"; // Hide navbar on landing page
+  // Show Navbar everywhere except LandingPage
+  const showNavbar = location.pathname !== "/";
 
   return (
     <div>
-      {showNavbar && <Navbar user={user} onLogout={handleLogout} />}
+      {showNavbar && (
+        <>
+          <Navbar user={user} onLogout={handleLogout} />
+          <div className="chat-container">
+            <Chat />
+          </div>
+        </>
+      )}
       <Routes>
-        <Route path="/" element={<LoginForm onLogin={handleLogin} />}/>
-        <Route path="/login"  element={<LandingPage />}/>
-        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/" element={<LandingPage onLogin={handleLogin} />} />
+        <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
+        <Route path="/register" element={<RegisterForm onLogin={handleLogin} />} />
         <Route path="/vehicle/:id" element={<VehicleDetails />} />
         <Route path="/catalog" element={<Catalog user={user} />} />
         <Route path="/cart" element={<Cart user={user} />} />

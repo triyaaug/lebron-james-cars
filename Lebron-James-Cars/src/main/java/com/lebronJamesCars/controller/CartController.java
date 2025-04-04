@@ -68,7 +68,7 @@ public class CartController {
     public ResponseEntity<String> checkout(@PathVariable Long userId) {
         try {
             cartService.checkout(userId);
-            return ResponseEntity.ok("Order Successfully Completed.");
+            return ResponseEntity.ok("Order successfully completed.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
