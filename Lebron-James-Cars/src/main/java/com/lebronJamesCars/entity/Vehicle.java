@@ -15,28 +15,37 @@ public class Vehicle {
     
     @Column(name = "brand", nullable = false)
     private String brand;
+    
     @Column(name = "shape")
     private String shape;
+    
     @Column(name = "vehicleHistory")
     private String vehicleHistory; //like accidents
+    
     @Column(name = "reviews")
     private String reviews;
     
     @Column(name = "modelYear", nullable = false)
     private int modelYear;
+    
     @Column(name = "stock", nullable = false)
     private int stock;
+    
     @Column(name = "loanDuration")
     private int loanDuration; // in months
 
     @Column(name = "emissionScore")
     private double emissionScore;
+    
     @Column(name = "interestRate")
     private BigDecimal interestRate;
+    
     @Column(name = "price", nullable = false)
     private BigDecimal price;
+    
     @Column(name = "co2Emission")
     private double co2Emission;
+    
     @Column(name = "fuelUsage")
     private double fuelUsage;
     
@@ -45,15 +54,19 @@ public class Vehicle {
     
     @Column(name = "mileage")
     private double mileage;
+    
+    // New field to store image URL or image path
+    @Column(name = "imageUrl")
+    private String imageUrl;
 
     public Vehicle(){
-    	
-
+        // default constructor
     }
     
     public Vehicle(String brand, String shape, String vehicleHistory, String reviews, 
-    		int modelYear, int stock, int loanDuration, double emissionScore, BigDecimal interestRate, BigDecimal price, 
-    		 double co2Emission, double fuelUsage, boolean onSale, double mileage) {
+                   int modelYear, int stock, int loanDuration, double emissionScore, 
+                   BigDecimal interestRate, BigDecimal price, double co2Emission, 
+                   double fuelUsage, boolean onSale, double mileage, String imageUrl) {
     	
     	this.brand = brand;
     	this.shape = shape;
@@ -69,7 +82,7 @@ public class Vehicle {
     	this.fuelUsage = fuelUsage;
     	this.onSale = onSale;
     	this.mileage = mileage;
-    	
+        this.imageUrl = imageUrl;
     }
 
     public double calculateLoan(double vehiclePrice, double downPayment, double interestRate, int loadDuration ){
@@ -81,117 +94,21 @@ public class Vehicle {
     	
     	if (monthlyInterestRate == 0) {
     		return loanPrincipal / numberOfPayments;
-    	}else {
-    		double monthlyPayment = (loanPrincipal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments))/ (Math.pow(1 + monthlyInterestRate, numberOfPayments)-1);
+    	} else {
+    		double monthlyPayment = (loanPrincipal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, numberOfPayments))
+                                    / (Math.pow(1 + monthlyInterestRate, numberOfPayments) - 1);
     		return monthlyPayment;
     	}
     }
 
+    // Getters and Setters for existing fields
 
-    public double getMileage() {
-    	return mileage;
+    public Long getVehicleID() {
+        return vehicleID;
     }
 
-    public void setMileage(double mileage) {
-    	this.mileage = mileage;
-    }
-
-    public boolean isOnSale() {
-        return onSale;
-    }
-
-    public void setOnSale(boolean onSale) {
-        this.onSale = onSale;
-    }
-
-    public double getFuelUsage() {
-        return fuelUsage;
-    }
-
-    public void setFuelUsage(double fuelUsage) {
-        this.fuelUsage = fuelUsage;
-    }
-
-    public double getCo2Emission() {
-        return co2Emission;
-    }
-
-    public void setCo2Emission(double co2Emission) {
-        this.co2Emission = co2Emission;
-    }
-
-    public int getLoanDuration() {
-        return loanDuration;
-    }
-
-    public void setLoanDuration(int loanDuration) {
-        this.loanDuration = loanDuration;
-    }
-
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public BigDecimal getInterestRate() {
-        return interestRate;
-    }
-
-    public void setInterestRate(BigDecimal interestRate) {
-        this.interestRate = interestRate;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public double getEmissionScore() {
-        return emissionScore;
-    }
-
-    public void setEmissionScore(double emissionScore) {
-        this.emissionScore = emissionScore;
-    }
-
-    public String getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(String reviews) {
-        this.reviews = reviews;
-    }
-
-
-    public String getVehicleHistory() {
-        return vehicleHistory;
-    }
-
-    public void setVehicleHistory(String vehicleHistory) {
-        this.vehicleHistory = vehicleHistory;
-    }
-
-    public int getModelYear() {
-        return modelYear;
-    }
-
-    public void setModelYear(int modelYear) {
-        this.modelYear = modelYear;
-    }
-
-    public String getShape() {
-        return shape;
-    }
-
-    public void setShape(String shape) {
-        this.shape = shape;
+    public void setVehicleID(Long vehicleID) {
+        this.vehicleID = vehicleID;
     }
 
     public String getBrand() {
@@ -202,11 +119,115 @@ public class Vehicle {
         this.brand = brand;
     }
 
-    public Long getVehicleID() {
-        return vehicleID;
+    public String getShape() {
+        return shape;
     }
 
-    public void setVehicleID(Long vehicleID) {
-        this.vehicleID = vehicleID;
+    public void setShape(String shape) {
+        this.shape = shape;
+    }
+
+    public String getVehicleHistory() {
+        return vehicleHistory;
+    }
+
+    public void setVehicleHistory(String vehicleHistory) {
+        this.vehicleHistory = vehicleHistory;
+    }
+
+    public String getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(String reviews) {
+        this.reviews = reviews;
+    }
+
+    public int getModelYear() {
+        return modelYear;
+    }
+
+    public void setModelYear(int modelYear) {
+        this.modelYear = modelYear;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int getLoanDuration() {
+        return loanDuration;
+    }
+
+    public void setLoanDuration(int loanDuration) {
+        this.loanDuration = loanDuration;
+    }
+
+    public double getEmissionScore() {
+        return emissionScore;
+    }
+
+    public void setEmissionScore(double emissionScore) {
+        this.emissionScore = emissionScore;
+    }
+
+    public BigDecimal getInterestRate() {
+        return interestRate;
+    }
+
+    public void setInterestRate(BigDecimal interestRate) {
+        this.interestRate = interestRate;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public double getCo2Emission() {
+        return co2Emission;
+    }
+
+    public void setCo2Emission(double co2Emission) {
+        this.co2Emission = co2Emission;
+    }
+
+    public double getFuelUsage() {
+        return fuelUsage;
+    }
+
+    public void setFuelUsage(double fuelUsage) {
+        this.fuelUsage = fuelUsage;
+    }
+
+    public boolean isOnSale() {
+        return onSale;
+    }
+
+    public void setOnSale(boolean onSale) {
+        this.onSale = onSale;
+    }
+
+    public double getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(double mileage) {
+        this.mileage = mileage;
+    }
+    
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

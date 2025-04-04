@@ -98,12 +98,7 @@ const Catalog = ({ user }) => {
             <select 
               onChange={(e) => setBrand(e.target.value)} 
               value={brand}
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "5px",
-                border: "1px solid #D9D9D9"
-              }}
+              style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #D9D9D9" }}
             >
               <option value="">All Brands</option>
               {brandOptions.map((b) => (
@@ -120,12 +115,7 @@ const Catalog = ({ user }) => {
             <select 
               onChange={(e) => setShape(e.target.value)} 
               value={shape}
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "5px",
-                border: "1px solid #D9D9D9"
-              }}
+              style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #D9D9D9" }}
             >
               <option value="">All Types</option>
               {shapeOptions.map((s) => (
@@ -142,12 +132,7 @@ const Catalog = ({ user }) => {
             <select 
               onChange={(e) => setModelYear(e.target.value)} 
               value={modelYear}
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "5px",
-                border: "1px solid #D9D9D9"
-              }}
+              style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #D9D9D9" }}
             >
               <option value="">All Years</option>
               {yearOptions.map((y) => (
@@ -164,12 +149,7 @@ const Catalog = ({ user }) => {
             <select
               onChange={(e) => setShowOnSale(e.target.value === "" ? null : e.target.value === "true")}
               value={showOnSale === null ? "" : showOnSale.toString()}
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "5px",
-                border: "1px solid #D9D9D9"
-              }}
+              style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #D9D9D9" }}
             >
               <option value="">All Vehicles</option>
               <option value="true">Hot Deals Only</option>
@@ -185,13 +165,7 @@ const Catalog = ({ user }) => {
             <select 
               onChange={(e) => setSortBy(e.target.value)} 
               value={sortBy}
-              style={{
-                width: "100%",
-                padding: "8px",
-                borderRadius: "5px",
-                border: "1px solid #D9D9D9",
-                marginBottom: "10px"
-              }}
+              style={{ width: "100%", padding: "8px", borderRadius: "5px", border: "1px solid #D9D9D9", marginBottom: "10px" }}
             >
               <option value="price">Price</option>
               <option value="modelYear">Model Year</option>
@@ -201,29 +175,14 @@ const Catalog = ({ user }) => {
 
           <button 
             onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-            style={{
-              padding: "10px",
-              backgroundColor: "#335C67",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-              marginBottom: "10px"
-            }}
+            style={{ padding: "10px", backgroundColor: "#335C67", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", marginBottom: "10px" }}
           >
             {sortOrder === "asc" ? "⬆️ Ascending" : "⬇️ Descending"}
           </button>
 
           <button 
             onClick={resetFilters}
-            style={{
-              padding: "10px",
-              backgroundColor: "#9E2A2B",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer"
-            }}
+            style={{ padding: "10px", backgroundColor: "#9E2A2B", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
           >
             Reset Filters
           </button>
@@ -248,53 +207,27 @@ const Catalog = ({ user }) => {
           }}>
             <strong style={{ marginRight: "10px" }}>Active Filters:</strong>
             {brand && (
-              <span style={{ 
-                backgroundColor: "#E0E0E0", 
-                padding: "5px 10px", 
-                borderRadius: "15px",
-                fontSize: "14px"
-              }}>
+              <span style={{ backgroundColor: "#E0E0E0", padding: "5px 10px", borderRadius: "15px", fontSize: "14px" }}>
                 Brand: {brand}
               </span>
             )}
             {shape && (
-              <span style={{ 
-                backgroundColor: "#E0E0E0", 
-                padding: "5px 10px", 
-                borderRadius: "15px",
-                fontSize: "14px"
-              }}>
+              <span style={{ backgroundColor: "#E0E0E0", padding: "5px 10px", borderRadius: "15px", fontSize: "14px" }}>
                 Type: {shape}
               </span>
             )}
             {modelYear && (
-              <span style={{ 
-                backgroundColor: "#E0E0E0", 
-                padding: "5px 10px", 
-                borderRadius: "15px",
-                fontSize: "14px"
-              }}>
+              <span style={{ backgroundColor: "#E0E0E0", padding: "5px 10px", borderRadius: "15px", fontSize: "14px" }}>
                 Year: {modelYear}
               </span>
             )}
             {showOnSale === true && (
-              <span style={{ 
-                backgroundColor: "#FFD6D6", 
-                padding: "5px 10px", 
-                borderRadius: "15px",
-                fontSize: "14px",
-                color: "#9E2A2B"
-              }}>
+              <span style={{ backgroundColor: "#FFD6D6", padding: "5px 10px", borderRadius: "15px", fontSize: "14px", color: "#9E2A2B" }}>
                 Hot Deals Only
               </span>
             )}
             {showOnSale === false && (
-              <span style={{ 
-                backgroundColor: "#E0E0E0", 
-                padding: "5px 10px", 
-                borderRadius: "15px",
-                fontSize: "14px"
-              }}>
+              <span style={{ backgroundColor: "#E0E0E0", padding: "5px 10px", borderRadius: "15px", fontSize: "14px" }}>
                 Regular Prices Only
               </span>
             )}
@@ -316,59 +249,29 @@ const Catalog = ({ user }) => {
                     overflow: "hidden",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                     transition: "transform 0.2s",
-                    ":hover": {
-                      transform: "translateY(-5px)"
-                    }
                   }}
                 >
-                  <div style={{ 
-                    height: "150px", 
-                    backgroundColor: "#f5f5f5", 
-                    borderBottom: "1px solid #D9D9D9"
-                  }}>
-                    {/* Placeholder for vehicle image */}
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: "100%",
-                      color: "#999",
-                      fontSize: "14px"
-                    }}>
-                      Vehicle Image
-                    </div>
+                  <div style={{ height: "150px", backgroundColor: "#f5f5f5", borderBottom: "1px solid #D9D9D9" }}>
+                    {/* Display vehicle image */}
+                    <img
+                      src={vehicle.imageUrl || `${process.env.PUBLIC_URL}/images/default-car.jpg`}
+                      alt={`${vehicle.brand} image`}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
                   </div>
                   <div style={{ padding: "15px" }}>
                     <h3 
                       onClick={() => handleClick(vehicle.vehicleID)} 
-                      style={{ 
-                        cursor: "pointer", 
-                        color: "#335C67",
-                        margin: "0 0 10px 0",
-                        fontSize: "18px"
-                      }}
+                      style={{ cursor: "pointer", color: "#335C67", margin: "0 0 10px 0", fontSize: "18px" }}
                     >
                       {vehicle.brand} {vehicle.model}
                     </h3>
-                    <div style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      marginBottom: "10px"
-                    }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
                       <span style={{ fontSize: "14px", color: "#666" }}>Year: {vehicle.modelYear}</span>
                       <span style={{ fontSize: "14px", color: "#666" }}>Mileage: {vehicle.mileage} km</span>
                     </div>
-                    <div style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginTop: "15px"
-                    }}>
-                      <span style={{ 
-                        fontSize: "16px", 
-                        fontWeight: "bold",
-                        color: "#9E2A2B"
-                      }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "15px" }}>
+                      <span style={{ fontSize: "16px", fontWeight: "bold", color: "#9E2A2B" }}>
                         ${vehicle.price}
                       </span>
                       <button
@@ -382,9 +285,6 @@ const Catalog = ({ user }) => {
                           borderRadius: "5px",
                           cursor: "pointer",
                           fontSize: "14px",
-                          ":hover": {
-                            backgroundColor: "rgba(224, 159, 62, 1)"
-                          }
                         }}
                       >
                         {addingToCart[vehicle.vehicleID] ? "Adding..." : "Add to Cart"}
@@ -412,59 +312,29 @@ const Catalog = ({ user }) => {
                     overflow: "hidden",
                     boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
                     transition: "transform 0.2s",
-                    ":hover": {
-                      transform: "translateY(-5px)"
-                    }
                   }}
                 >
-                  <div style={{ 
-                    height: "150px", 
-                    backgroundColor: "#f5f5f5", 
-                    borderBottom: "1px solid #D9D9D9"
-                  }}>
-                    {/* Placeholder for vehicle image */}
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      height: "100%",
-                      color: "#999",
-                      fontSize: "14px"
-                    }}>
-                      Vehicle Image
-                    </div>
+                  <div style={{ height: "150px", backgroundColor: "#f5f5f5", borderBottom: "1px solid #D9D9D9" }}>
+                    {/* Display vehicle image */}
+                    <img
+                      src={vehicle.imageUrl || `${process.env.PUBLIC_URL}/images/default-car.jpg`}
+                      alt={`${vehicle.brand} image`}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
                   </div>
                   <div style={{ padding: "15px" }}>
                     <h3 
                       onClick={() => handleClick(vehicle.vehicleID)} 
-                      style={{ 
-                        cursor: "pointer", 
-                        color: "#335C67",
-                        margin: "0 0 10px 0",
-                        fontSize: "18px"
-                      }}
+                      style={{ cursor: "pointer", color: "#335C67", margin: "0 0 10px 0", fontSize: "18px" }}
                     >
                       {vehicle.brand} {vehicle.model}
                     </h3>
-                    <div style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      marginBottom: "10px"
-                    }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px" }}>
                       <span style={{ fontSize: "14px", color: "#666" }}>Year: {vehicle.modelYear}</span>
                       <span style={{ fontSize: "14px", color: "#666" }}>Mileage: {vehicle.mileage} km</span>
                     </div>
-                    <div style={{ 
-                      display: "flex", 
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      marginTop: "15px"
-                    }}>
-                      <span style={{ 
-                        fontSize: "16px", 
-                        fontWeight: "bold",
-                        color: "#335C67"
-                      }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "15px" }}>
+                      <span style={{ fontSize: "16px", fontWeight: "bold", color: "#335C67" }}>
                         ${vehicle.price}
                       </span>
                       <button
@@ -478,9 +348,6 @@ const Catalog = ({ user }) => {
                           borderRadius: "5px",
                           cursor: "pointer",
                           fontSize: "14px",
-                          ":hover": {
-                            backgroundColor: "rgba(224, 159, 62, 1)"
-                          }
                         }}
                       >
                         {addingToCart[vehicle.vehicleID] ? "Adding..." : "Add to Cart"}
@@ -495,25 +362,11 @@ const Catalog = ({ user }) => {
 
         {/* No Results Message */}
         {vehicles.length === 0 && (
-          <div style={{ 
-            padding: "40px", 
-            textAlign: "center", 
-            backgroundColor: "#f5f5f5", 
-            borderRadius: "10px",
-            marginTop: "20px"
-          }}>
+          <div style={{ padding: "40px", textAlign: "center", backgroundColor: "#f5f5f5", borderRadius: "10px", marginTop: "20px" }}>
             <p style={{ fontSize: "18px", color: "#666" }}>No vehicles match your search criteria. Try adjusting your filters.</p>
             <button 
               onClick={resetFilters}
-              style={{
-                padding: "10px 20px",
-                backgroundColor: "#335C67",
-                color: "white",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                marginTop: "15px"
-              }}
+              style={{ padding: "10px 20px", backgroundColor: "#335C67", color: "white", border: "none", borderRadius: "5px", cursor: "pointer", marginTop: "15px" }}
             >
               Reset All Filters
             </button>
